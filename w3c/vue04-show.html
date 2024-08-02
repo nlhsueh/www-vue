@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>v-show vs. v-if</title>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 80%;
+            padding: 0 20px 20px 20px;
+        }
+
+        #app div {
+            padding: 20px;
+            margin: 10px;
+            display: inline-block;
+            font-weight: bold;
+            border: solid black 1px;
+        }
+
+        #app p {
+            padding: 10px;
+            background-color: rgb(200, 246, 200);
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example: v-show vs. v-if</h1>
+
+    <div id="app">
+        <p>Set the 'showDiv' data property to 'false', and run the code again. Right click this green p element, choose
+            'Inspect' or 'Inspect element' and you can see that the div element with v-show still exist, it is only the
+            CSS display property that is set to 'none', and the div with v-if is destroyed.</p>
+        <div v-show="showDiv">Div tag with v-show</div>
+        <div v-if="showDiv">Div tag with v-if</div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    showDiv: true
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>
