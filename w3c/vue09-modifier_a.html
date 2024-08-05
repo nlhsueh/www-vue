@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mouse Pointer Position</title>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 200px;
+            padding: 0 20px 20px 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example: Create Alert Only Once</h1>
+
+    <div id="app">
+        <p>The button below creates an alert in a pop-up box, but only on the first click:</p>
+        <button v-on:click.once="createAlert">Create Alert</button>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            methods: {
+                createAlert() {
+                    alert("Alert created from button click")
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>

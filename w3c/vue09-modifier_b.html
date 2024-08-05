@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Find Out Key Value</title>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 200px;
+            padding: 0 20px 20px 20px;
+        }
+
+        #green {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example: Find The Keyboard Key Value</h1>
+
+    <div id="app">
+        <p>Start writing inside the text box to record the key value:</p>
+        <input type="text" v-on:keydown="getKey">
+        <p id="green">{{ keyValue }}</p>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    keyValue: ''
+                }
+            },
+            methods: {
+                getKey(evt) {
+                    this.keyValue = evt.key
+                    console.log(evt.key)
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>

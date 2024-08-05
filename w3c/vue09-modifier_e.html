@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Right Mouse Button Event</title>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 200px;
+            padding: 20px;
+        }
+
+        #app>div {
+            width: 160px;
+            padding: 20px;
+            cursor: default;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example: Right Mouse Button Event</h1>
+
+    <div id="app">
+        <div v-on:click.right="changeColor" v-bind:style="{ backgroundColor:'hsl('+bgColor+',80%,80%)' }">
+            <p>Press right mouse button here.</p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    bgColor: 0
+                }
+            },
+            methods: {
+                changeColor() {
+                    this.bgColor += 50;
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>

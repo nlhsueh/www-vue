@@ -138,11 +138,10 @@
             </div> -->
 
             <div>
-                <img v-for="urls in prefixedImgUrl" v-bind:src="urls" style="margin:2px"><br>
-                <idv v-for="x in prefixedImgUrl">
-                    {{ x }} --
+                <img v-for="url in prefixedImgUrl" v-bind:src="url" style="margin:2px"><br>
+                <idv v-for="url in prefixedImgUrl">
+                    {{ url }} V
                 </idv>
-
             </div>
 
             <div class="row justify-content-center" id="medalTable">
