@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Notebook Example</title>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 300px;
+            padding: 20px;
+        }
+
+        #app>div {
+            width: 100%;
+            position: relative;
+            margin-top: 10px;
+            aspect-ratio: 1;
+            background-image: url("img/img_notebook.jpg");
+            background-size: 340%;
+            background-position: -345px 0;
+            overflow: hidden;
+        }
+
+        #app span {
+            width: 80%;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.2em;
+            transform-origin: 0 0;
+            rotate: 33deg;
+            position: absolute;
+            top: 50px;
+            left: 70px;
+        }
+
+        #app textarea {
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example: Notebook</h1>
+
+    <div id="app">
+        <textarea v-on:?="writeText" rows="8" cols="30" placeholder="Start writing.."></textarea>
+        <div>
+            <span>{{ text }}</span>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    text: ''
+                }
+            },
+            methods: {
+                writeText(event) {
+                    this.text = event.target.value
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>

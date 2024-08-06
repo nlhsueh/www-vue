@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My first Vue page</title>
+    <style>
+        #app>div {
+            border: solid black 1px;
+            width: 80%;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        img {
+            width: 70px;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example 'v-for' to create images</h1>
+    <p>The 'v-for' directive is used to create images based on the 'manyFoods' array in the Vue instance.</p>
+
+    <div id="app">
+
+        <p>列出所有的照片：</p>
+        ?
+
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    manyFoods: [
+                        'img/img_burrito.svg',
+                        'img/img_salad.svg',
+                        'img/img_cake.svg',
+                        'img/img_soup.svg',
+                        'img/img_fish.svg',
+                        'img/img_pizza.svg',
+                        'img/img_rice.svg'
+                    ]
+                }
+            }
+        })
+
+        app.mount('#app')
+
+    </script>
+
+</body>
+
+</html>

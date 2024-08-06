@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>'v-if' pizza example</title>
+    <style>
+        #app {
+            border: dashed black 1px;
+            width: 160px;
+            padding: 0 20px;
+            font-weight: bold;
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example with text check</h1>
+
+    <p>In this example 'v-if' uses a method 'includes()' instead of a comparison operator.</p>
+
+
+    <div id="app">
+        <p ?="text.includes('pizza')">The text includes the word 'pizza'</p>
+        <p ?>The word 'pizza' is not found in the text</p>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    text: 'I like taco, pizza, Thai beef salad, pho soup and tagine.'
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>

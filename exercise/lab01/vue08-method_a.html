@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Click To Run Method</title>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 200px;
+            padding: 0 20px 20px 20px;
+        }
+
+        #app>div {
+            width: 140px;
+            height: 60px;
+            background-color: lightgreen;
+            padding: 20px;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example: Click to run a method</h1>
+
+    <div id="app">
+        <p>點一下字會出現:</p>
+        <div v-on:click="changeText">
+            {{ text }}
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    text: ''
+                }
+            },
+            ?: {
+                ? () {
+                    ? = 'Hello World!'
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>

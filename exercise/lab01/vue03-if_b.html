@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My first Vue page</title>
+    <style>
+        #app {
+            border: dashed black 1px;
+            width: 130px;
+            padding: 0 20px 20px 20px;
+            font-weight: bold;
+            background-color: lightgreen;
+        }
+
+        img {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example with 'v-if', 'v-else-if' and 'v-else'</h1>
+
+    <p>In this example all three directives 'v-if', 'v-else-if' and 'v-else' are used together.</p>
+
+    <p>Remove 'pizza' from the 'text' property inside the Vue instance, click 'Run' and see what happens. Then remove
+        'burrito' and click 'Run' one more time.</p>
+
+    <div id="app">
+        <p>如果有 pizza 就 show 出圖片，沒有就說抱歉：</p>
+        ?
+
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    store: '我們店裡有 pizza, 漢堡和墨西哥捲餅'
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>

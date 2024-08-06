@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Count Moose</title>
+    <style>
+        #app {
+            border: dashed black 1px;
+            width: 200px;
+            padding: 20px;
+        }
+
+        img {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example: Count Moose</h1>
+
+    <p>點一下 count +1, 並呈現目前的值</p>
+    <div id="app">
+        <img src="img/img_cake.svg" width="770" height="549">
+        <p>?</p>
+        <button v?="count++">Count moose</button>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    count: 0
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>

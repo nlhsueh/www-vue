@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mouse Pointer Position</title>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 200px;
+            padding: 0 20px 20px 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example: Create Alert Only Once</h1>
+
+    <div id="app">
+        <p>第一次點擊會出現訊息</p>
+        <button v-on:click.?="createAlert">Create Alert</button>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            methods: {
+                createAlert() {
+                    alert("Alert created from button click")
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>

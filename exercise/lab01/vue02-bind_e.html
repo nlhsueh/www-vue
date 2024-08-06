@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>v-bind background-color</title>
+    <style>
+        #app>div {
+            width: 200px;
+            padding: 20px;
+            border: dashed black 1px;
+        }
+
+        .impClass {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example: 使用 shorthand </h1>
+
+
+    <div id="app">
+        <div><img ?"url"></div>
+
+        <div ?"{ fontSize: size }">Text example</div>
+
+        <div ?"className">
+            Importance visualized by background color
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    url: "img/img_cake.svg",
+                    size: '28px',
+                    className: 'impClass',
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>
