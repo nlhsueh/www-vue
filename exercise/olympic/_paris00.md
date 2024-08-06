@@ -4,7 +4,8 @@
 bind the banner title
 
 ## v02 list all country-medals string
-show all country-medals string
+* show all country-medals string
+* use `v-for`
 
 ```javascript
 const medals = [
@@ -36,6 +37,8 @@ const medals = [
 The images are stored in `img/xxx.png`:
 * Use v-for to show the image
 * use `computed` to return the right directory url
+  * create an array to save the urls
+  * return the array of urls
 
 ```javascript
     img_url: {
