@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>v-bind background-color</title>
+    <style>
+        #app>div {
+            width: 200px;
+            padding: 20px;
+            border: dashed black 1px;
+        }
+
+        .impClass {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example: 'v-bind' used to change class.</h1>
+
+    <p>The browser sets class name to the value stored in the 'className' property inside the Vue instance.</p>
+
+    <div id="app">
+        <div v-bind:class="className">
+            Importance visualized by background color
+        </div>
+        <div v-bind:class="{ impClass: false }">
+            Importance visualized by background color
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    className: 'impClass'
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>

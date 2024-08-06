@@ -17,8 +17,8 @@ We will now learn how we can create our very first Vue web page, in 5 basic step
 
 Directive	Details
 ---
-* `v-bind`	Connects an attribute in an HTML tag to a data variable inside the Vue instance.
-* `v-if`	Creates HTML tags depending on a condition. Directives v-else-if and v-else are used together with the v-if directive.
+* `v-bind`	Connects an attribute in an HTML tag to a data variable inside the Vue instance. 連接 html 屬性與 Vue 實體。
+* `v-if`	Creates HTML tags depending on a condition. Directives v-else-if and v-else are used together with the v-if directive. 
 * `v-show`	Specifies if an HTML element should be visible or not depending on a condition.
 * `v-for`	Creates a list of tags based on an array in the Vue instance using a for-loop.
 * `v-on`	Connects an event on an HTML tag to a JavaScript expression or a Vue instance method. We can also define more specifically how our page should react to a certain event by using event-modifiers.

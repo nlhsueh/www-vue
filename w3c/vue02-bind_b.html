@@ -23,12 +23,9 @@
 
     <div id="app">
         <div v-bind:style="{ fontSize: size }">Text example</div>
-        <div v-bind:style="{ fontSize: size }">Text example</div>
+        <div v-bind:style="{ fontSize: size + 'px'}">Text example</div>
+        <div v-bind:style="{ 'fontSize': size + 'px'}">Text example</div>
     </div>
-    <div id="app">
-        <div v-bind:style="{ fontSize: size }">Text example</div>
-    </div>
-
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>

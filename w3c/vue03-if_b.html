@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My first Vue page</title>
+    <style>
+        #app {
+            border: dashed black 1px;
+            width: 130px;
+            padding: 0 20px 20px 20px;
+            font-weight: bold;
+            background-color: lightgreen;
+        }
+
+        img {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example with 'v-if', 'v-else-if' and 'v-else'</h1>
+
+    <p>In this example all three directives 'v-if', 'v-else-if' and 'v-else' are used together.</p>
+
+    <p>Remove 'pizza' from the 'text' property inside the Vue instance, click 'Run' and see what happens. Then remove
+        'burrito' and click 'Run' one more time.</p>
+
+    <div id="app">
+
+        <div v-if="text.includes('pizza')">
+            <p>The text includes the word 'pizza'</p>
+            <img src="img/img_pizza.svg">
+        </div>
+
+        <div v-else-if="text.includes('burrito')">
+            <p>The text includes the word 'burrito', but not 'pizza'</p>
+            <img src="img/img_burrito.svg">
+        </div>
+
+        <p v-else>The words 'pizza' or 'burrito' are not found in the text</p>
+
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    text: 'I like burrito, pizza, Thai beef salad, pho soup and tagine.'
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>

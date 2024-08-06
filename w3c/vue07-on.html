@@ -36,6 +36,11 @@
             border-radius: 50%;
             background-color: yellow;
         }
+
+        #app span {
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+        }
     </style>
 </head>
 
@@ -51,6 +56,21 @@
             <img src="img/img_lightBulb.svg">
         </div>
         <button v-on:click=" lightOn =! lightOn ">Switch light</button>
+        <button @:click=" lightOn =! lightOn ">@ Shorthand</button>
+
+        <input v-on:input="inpCount++">
+        <p>{{ 'Input events occured: ' + inpCount }}</p>
+
+        <div>
+            <img v-bind:src="'img/'+imgUrl">
+        </div>
+        <ol>
+            <li v-for="food in manyFoods" v-on:click="imgUrl=food.url">
+                {{ food.name }}
+            </li>
+        </ol>
+
+
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -58,7 +78,16 @@
         const app = Vue.createApp({
             data() {
                 return {
-                    lightOn: false
+                    lightOn: false,
+                    inpCount: 0,
+                    colorVal: 50,
+                    imgUrl: 'img_salad.svg',
+                    manyFoods: [
+                        { name: 'Burrito', url: 'img_burrito.svg' },
+                        { name: 'Salad', url: 'img_salad.svg' },
+                        { name: 'Cake', url: 'img_cake.svg' },
+                        { name: 'Soup', url: 'img_soup.svg' }
+                    ]
                 }
             }
         })

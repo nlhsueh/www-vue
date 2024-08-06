@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My first Vue page</title>
+    <style>
+        #app>div {
+            border: solid black 1px;
+            width: 80%;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        figure {
+            width: 80px;
+            padding: 10px;
+            margin: 10px;
+            background-color: lightskyblue;
+            border-radius: 5px;
+        }
+
+        figcaption {
+            text-align: center;
+        }
+
+        img {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example 'v-for' to create images and text</h1>
+    <p>The 'v-for' directive is used to create images and text based on the 'manyFoods' array in the Vue instance.</p>
+
+    <div id="app">
+        <div>
+            <figure v-for="x in manyFoods">
+                <img v-bind:src="'img/'+x.url">
+                <figcaption>{{ x.name }}</figcaption>
+            </figure>
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    manyFoods: [
+                        { name: 'Burrito', url: 'img_burrito.svg' },
+                        { name: 'Salad', url: 'img_salad.svg' },
+                        { name: 'Cake', url: 'img_cake.svg' },
+                        { name: 'Soup', url: 'img_soup.svg' },
+                        { name: 'Fish', url: 'img_fish.svg' },
+                        { name: 'Pizza', url: 'img_pizza.svg' },
+                        { name: 'Rice', url: 'img_rice.svg' }
+                    ]
+                }
+            }
+        })
+
+        app.mount('#app')
+
+    </script>
+
+</body>
+
+</html>

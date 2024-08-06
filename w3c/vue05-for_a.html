@@ -31,6 +31,10 @@
             <li v-for="x in manyFoods">{{ x }}</li>
         </ol>
 
+        <p v-for="(x, index) in manyFoods">
+            {{ index }}: "{{ x }}"
+        </p>
+
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>

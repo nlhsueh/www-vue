@@ -31,6 +31,10 @@
             <img v-for="x in manyFoods" v-bind:src="x">
         </div>
 
+        <div>
+            <img v-for="(i,x) in manyFoods" v-bind:src="x">
+        </div>
+
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
