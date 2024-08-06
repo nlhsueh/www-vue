@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Range Watcher</title>
+    <style>
+        #app {
+            border: dashed black 1px;
+            display: inline-block;
+            padding: 10px;
+        }
+
+        #app>p {
+            font-size: large;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example: Range Watcher</h1>
+    <p>A watcher is used for the 'rangeVal' value so that values between 20 and 60 are not possible to choose.</p>
+    <div id="app">
+        <input type="range" min="0" max="100" step="1" v-model="rangeVal">
+        <p><code>{{ rangeVal }}</code></p>
+    </div>
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    rangeVal: 70
+                }
+            },
+            watch: {
+                rangeVal(val) {
+                    if (val > 20 && val < 60) {
+                        if (val < 40) {
+                            this.rangeVal = 20;
+                        }
+                        else {
+                            this.rangeVal = 60;
+                        }
+                    }
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>
