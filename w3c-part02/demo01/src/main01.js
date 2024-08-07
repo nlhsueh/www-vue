@@ -1,12 +1,10 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
-// import App from './App.vue'
-import App from './Food01.vue'
-import FoodItem01 from './components/FoodItem01.vue'
+import AppFood01 from './AppFood01.vue'
+// import FoodItem from './components/FoodItem01a.vue'
+import FoodItem from './components/FoodItem01b.vue'
 
-const app = createApp(App)
+const app = createApp(AppFood01)
 
-app.component('food-item', FoodItem01)
+app.component('food-item', FoodItem)
 
 app.mount('#app')
