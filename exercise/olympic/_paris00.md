@@ -65,3 +65,14 @@ The images are stored in `img/xxx.png`:
     }
 ```    
 
+## v04 country
+* show all coutry image and their medals
+* sort by name, sort by gold and sort by totol medals
+
+## v05 update medals
+* design an input form that we can update the medals status
+* use the `select` component to choose the country
+* design fields for us to input the medals, saving to the countryList data.
+
+## v06 watch data
+* when we choose the country, the fields of medals are also updated 
