@@ -67,12 +67,25 @@ The images are stored in `img/xxx.png`:
 
 ## v04 country
 * show all coutry image and their medals
+* `created` life cycle, when the vue object is created, run the method `created()`
+  * in the method, we call `build_country_list` to build the list of country objects
 * sort by name, sort by gold and sort by totol medals
+
+learn
+* use `created()` to compute something for further display
+
 
 ## v05 update medals
 * design an input form that we can update the medals status
 * use the `select` component to choose the country
 * design fields for us to input the medals, saving to the countryList data.
 
+learn
+* `v-model`
+* input to update the data
+
 ## v06 watch data
 * when we choose the country, the fields of medals are also updated 
+
+learn
+* `watch`
