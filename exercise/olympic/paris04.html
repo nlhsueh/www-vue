@@ -8,6 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
+        .btn {
+            margin-right: 5px;
+        }
+
         .carousel-item img {
             width: 1200px;
             height: 300px;
@@ -123,185 +127,120 @@
         </div>
 
         <div class="container mt-3">
-            <div class="row mb-3">
+            <div class="row m-3">
                 <div class="col">
-                    <button class="btn btn-primary" onclick="sortByName()">Sort by Name</button>
-                    <button class="btn btn-success" onclick="sortByGold()">Sort by Gold</button>
-                    <button class="btn btn-warning" onclick="sortByTotal()">Sort by Total Medals</button>
+                    <button class="btn btn-primary" @:click="sortByName()">Sort by Name</button>
+                    <button class="btn btn-success" @:click="sortByGold()">Sort by Gold</button>
+                    <button class="btn btn-warning" @:click="sortByTotal()">Sort by Total Medals</button>
                 </div>
-            </div>
-
-            <!-- <div class="list-group">
-                <ol>
-                    <li class="list-group-item" v-for="country_medals_str in medals">{{ country_medals_str }}</li>
-                </ol>
-            </div> -->
-
-            <div>
-                <img v-for="url in prefixedImgUrl" v-bind:src="url" style="margin:2px"><br>
-                <idv v-for="url in prefixedImgUrl">
-                    {{ url }} V
-                </idv>
             </div>
 
             <div class="row justify-content-center" id="medalTable">
-
-            </div>
-        </div>
-
-        <footer class="bg-dark text-white text-center text-lg-start mt-5">
-            <div class="text-center p-3 bg-dark" style="color: white;">
-                © 2024 Copyright
-            </div>
-        </footer>
-    </div>
-
-    <script>
-        const medals = [
-            "United-States 3 8 9",
-            "France 5 8 3",
-            "Japan 6 2 4",
-            "China 5 5 2",
-            "Great-Britain 2 5 3",
-            "Australia 5 4 0",
-            "Republic-of-Korea 5 3 1",
-            "Italy 2 3 3",
-            "Canada 2 1 2",
-            "Hong-Kong 2 0 1",
-            "Kazakhstan 1 0 2",
-            "South-Africa 1 0 2",
-            "Brazil 0 1 2",
-            "Sweden 0 1 2",
-            "Germany 2 0 0",
-            "Belgium 1 0 1",
-            "Turkey 0 1 1",
-            "India 0 0 2",
-            "Moldova 0 0 2",
-            "Azerbaijan 1 0 0"
-        ];
-
-        const countryList = medals.map(medal => {
-            const [name, gold, silver, bronze] = medal.split(' ');
-            return {
-                name: name.replace(/-/g, ' '),
-                gold: parseInt(gold),
-                silver: parseInt(silver),
-                bronze: parseInt(bronze),
-                total: parseInt(gold) + parseInt(silver) + parseInt(bronze)
-            };
-        });
-
-        console.log(countryList);
-
-        function renderTable(countries) {
-            const medalTableContainer = document.querySelector('#medalTable');
-            medalTableContainer.innerHTML = '';
-            countries.forEach(country => {
-                const card = document.createElement('div');
-                card.className = 'country-card col-lg-2 col-md-3 col-sm-4 col-6';
-                card.innerHTML = `
-                <div class="card-body">
-                    <h5 class="card-title">${country.name}</h5>
-                    <img src="img/${country.name.toLowerCase().replace(/\s+/g, '-')}.png" class="card-img-top" alt="${country.name}">
-                    <div class="medals mt-2">
-                        <span class="medal gold">${country.gold}</span>
-                        <span class="medal silver">${country.silver}</span>
-                        <span class="medal bronze">${country.bronze}</span>
+                <div class="country-card col-lg-2 col-md-3 col-sm-4 col-6" v-for="country in countryList">
+                    <div class="card-body">
+                        <h5 class="card-title"> {{country.name}}</h5>
+                        <img :src="'img/' + country.img" class="card-img-top">
+                        <div class="medals mt-2">
+                            <span class="medal gold">{{country.gold}}</span>
+                            <span class="medal silver">{{country.silver}}</span>
+                            <span class="medal bronze">{{country.bronze}}</span>
+                        </div>
                     </div>
                 </div>
-            `;
-                medalTableContainer.appendChild(card);
+            </div>
+
+            <footer class="bg-dark text-white text-center text-lg-start mt-5">
+                <div class="text-center p-3 bg-dark" style="color: white;">
+                    © 2024 Copyright
+                </div>
+            </footer>
+        </div>
+
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        olympic_title_en: 'Paris 2024 Olympics',
+                        olympic_title_tw: '2024 巴黎奧運',
+                        medals: [
+                            "United-States 3 8 9",
+                            "France 5 8 3",
+                            "Japan 6 2 4",
+                            "China 5 5 2",
+                            "Great-Britain 2 5 3",
+                            "Australia 5 4 0",
+                            "Republic-of-Korea 5 3 1",
+                            "Italy 2 3 3",
+                            "Canada 2 1 2",
+                            "Hong-Kong 2 0 1",
+                            "Kazakhstan 1 0 2",
+                            "South-Africa 1 0 2",
+                            "Brazil 0 1 2",
+                            "Sweden 0 1 2",
+                            "Germany 2 0 0",
+                            "Belgium 1 0 1",
+                            "Turkey 0 1 1",
+                            "India 0 0 2",
+                            "Moldova 0 0 2",
+                            "Azerbaijan 1 0 0"
+                        ],
+                        img_url: {
+                            Australia: "australia.png",
+                            Azerbaijan: "azerbaijan.png",
+                            Belgium: "belgium.png",
+                            Brazil: "brazil.png",
+                            Canada: "canada.png",
+                            China: "china.png",
+                            France: "france.png",
+                            Germany: "germany.png",
+                            Great_Britain: "great-britain.png",
+                            Hong_Kong: "hong-kong.png",
+                            India: "india.png",
+                            Italy: "italy.png",
+                            Japan: "japan.png",
+                            Kazakhstan: "kazakhstan.png",
+                            Moldova: "moldova.png",
+                            Republic_of_Korea: "skorea.png",
+                            South_Africa: "south-africa.png",
+                            Sweden: "sweden.png",
+                            Turkey: "turkey.png",
+                            United_States: "united-states.png"
+                        },
+                        countryList: [],
+                    }
+                },
+                created() {
+                    this.build_country_list();
+                    console.log(this.countryList);
+                },
+                methods: {
+                    build_country_list() {
+                        this.countryList = this.medals.map(medal => {
+                            const [name, gold, silver, bronze] = medal.split(' ');
+                            return {
+                                name: name.replace(/-/g, ' '),
+                                gold: parseInt(gold),
+                                silver: parseInt(silver),
+                                bronze: parseInt(bronze),
+                                total: parseInt(gold) + parseInt(silver) + parseInt(bronze),
+                                img: this.img_url[name.replaceAll('-', '_')],
+                            };
+                        });
+                    },
+                    sortByName() {
+                        this.countryList.sort((a, b) => a.name.localeCompare(b.name))
+                    },
+                    sortByGold() {
+                        this.countryList.sort((a, b) => b.gold - a.gold);
+                    },
+                    sortByTotal() {
+                        this.countryList.sort((a, b) => b.total - a.total);
+                    },
+                }
             });
-        }
-
-        function sortByName() {
-            const sorted = [...countryList].sort((a, b) => a.name.localeCompare(b.name));
-            renderTable(sorted);
-        }
-
-        function sortByGold() {
-            const sorted = [...countryList].sort((a, b) => b.gold - a.gold);
-            renderTable(sorted);
-        }
-
-        function sortByTotal() {
-            const sorted = [...countryList].sort((a, b) => b.total - a.total);
-            renderTable(sorted);
-        }
-
-        renderTable(countryList);
-    </script>
-
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script>
-        const app = Vue.createApp({
-            data() {
-                return {
-                    olympic_title_en: 'Paris 2024 Olympics',
-                    olympic_title_tw: '2024 巴黎奧運',
-                    medals: [
-                        "United-States 3 8 9",
-                        "France 5 8 3",
-                        "Japan 6 2 4",
-                        "China 5 5 2",
-                        "Great-Britain 2 5 3",
-                        "Australia 5 4 0",
-                        "Republic-of-Korea 5 3 1",
-                        "Italy 2 3 3",
-                        "Canada 2 1 2",
-                        "Hong-Kong 2 0 1",
-                        "Kazakhstan 1 0 2",
-                        "South-Africa 1 0 2",
-                        "Brazil 0 1 2",
-                        "Sweden 0 1 2",
-                        "Germany 2 0 0",
-                        "Belgium 1 0 1",
-                        "Turkey 0 1 1",
-                        "India 0 0 2",
-                        "Moldova 0 0 2",
-                        "Azerbaijan 1 0 0"
-                    ],
-                    img_url: {
-                        Australia: "australia.png",
-                        Azerbaijan: "azerbaijan.png",
-                        Belgium: "belgium.png",
-                        Brazil: "brazil.png",
-                        Canada: "canada.png",
-                        China: "china.png",
-                        France: "france.png",
-                        Germany: "germany.png",
-                        Great_Britain: "great-britain.png",
-                        Hong_Kong: "hong-kong.png",
-                        India: "india.png",
-                        Italy: "italy.png",
-                        Japan: "japan.png",
-                        Kazakhstan: "kazakhstan.png",
-                        Moldova: "moldova.png",
-                        Republic_of_Korea: "skorea.png",
-                        South_Africa: "south-africa.png",
-                        Sweden: "sweden.png",
-                        Turkey: "turkey.png",
-                        United_States: "united-states.png"
-                    }
-
-                }
-            },
-            mounted: {
-
-            }
-            computed: {
-                prefixedImgUrl() {
-                    const prefix = "img/";
-                    let result = [];
-                    for (let country in this.img_url) {
-                        result.push(prefix + this.img_url[country]);
-                    }
-                    return result;
-                }
-            }
-        });
-        app.mount('#app')
-    </script>
+            app.mount('#app')
+        </script>
 
 </body>
 
