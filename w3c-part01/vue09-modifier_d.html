@@ -30,7 +30,7 @@
 
     <div id="app">
         <p>Press 'Ctrl' and 'S' in combination to generate an alert:</p>
-        <textarea cols="20" rows="3" v-on:keydown.ctrl.s="createAlert" placeholder="Start writing.."></textarea>
+        <textarea cols="20" rows="3" v-on:keydown.s.ctrl="createAlert" placeholder="Start writing.."></textarea>
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>

@@ -42,8 +42,8 @@
         const app = Vue.createApp({
             data() {
                 return {
-                    itemName: null,
-                    itemNumber: null,
+                    itemName: "",
+                    itemNumber: 0,
                     shoppingList: [
                         { name: 'Tomatoes', number: 5 }
                     ]
@@ -56,8 +56,8 @@
                         number: this.itemNumber
                     }
                     this.shoppingList.push(item)
-                    this.itemName = null
-                    this.itemNumber = null
+                    this.itemName = ""
+                    this.itemNumber = 0
                 }
             }
         })
