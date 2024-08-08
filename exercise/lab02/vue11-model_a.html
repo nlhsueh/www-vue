@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Two-way Binding</title>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 200px;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example: Two-way Binding</h1>
+    <p>The inpText property is bound two ways: From the input element to the Vue property, and from the Vue property to
+        the input element.</p>
+    <p>Try changing the input field and see how the Vue property value updates. Try also to change the inpText property
+        value inside the code, click 'Run', and see how the input elements value changes.</p>
+    <div id="app">
+        <input type="text" ?>
+        <p>inpText value: "{{ ? }}" </p>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    inpText: 'Initial text'
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>

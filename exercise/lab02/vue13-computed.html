@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Moose count</title>
+    <style>
+        form {
+            border: dashed black 1px;
+            display: inline-block;
+            padding: 10px;
+        }
+
+        label {
+            padding: 5px;
+        }
+
+        label:hover {
+            cursor: pointer;
+            background-color: lightgray;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Example: Computed Property 'yes' or 'no'</h1>
+    <p>In this example we give the user feedback 'yes' or 'no' when the checkbox is toggled. Feedback 'yes' or 'no' fits
+        better with our everyday language than 'true' or 'false', and we use a computed property in this example to
+        achieve this.</p>
+    <div id="app">
+        <form>
+            <p>
+                Important item?
+                <label>
+                    <input type="checkbox" v-model="chbxVal">
+                    {{ ? }}
+                </label>
+            </p>
+        </form>
+    </div>
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    chbxVal: false
+                }
+            },
+            ? {
+                isImportant() {
+                    if (this.chbxVal) {
+                        return 'yes'
+                    }
+                    else {
+                        return 'no'
+                    }
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+
+</body>
+
+</html>
