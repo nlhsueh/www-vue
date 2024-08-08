@@ -2,6 +2,9 @@
   <h1>Food</h1>
   <p>Toggle with the 'Favorite' button to emit an event from 'FoodItem.vue' to 'App.vue' with the built-in Vue method
     '$emit()'.</p>
+    <p>元件送訊息到 parent 的物件</p>
+    
+    <!-- toggle-favorite 可以說是一個自訂的事件，從元件來的事件 -->
   <div id="wrapper">
     <food-item v-for="x in foods" :key="x.name" :food-name="x.name" :food-desc="x.desc" :is-favorite="x.favorite"
       @toggle-favorite="receiveEmit" />

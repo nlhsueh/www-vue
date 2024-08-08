@@ -11,7 +11,7 @@
 
 <script>
 export default {
-    props: ['foodName', 'foodDesc', 'isFavorite'],
+    props: ['foodName','foodDesc','isFavorite'],
     data() {
         return {
             foodIsFavorite: this.isFavorite
@@ -19,15 +19,15 @@ export default {
     },
     methods: {
         toggleFavorite() {
-            this.$emit('toggle-favorite');
+            this.$emit('toggle-favorite', this.foodName);
         }
     }
 };
 </script>
 
 <style>
-img {
-    height: 1.5em;
-    float: right;
-}
+    img {
+        height: 1.5em;
+        float: right;
+    }
 </style>  
