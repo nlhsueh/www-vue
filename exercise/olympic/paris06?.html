@@ -243,45 +243,61 @@
                         bronzeMedals: 0,
                     }
                 },
-                created() {
-                    this.build_country_list();
-                    console.log(this.countryList);
-                },
-                methods: {
-                    build_country_list() {
-                        this.countryList = this.medals.map(medal => {
-                            const [name, gold, silver, bronze] = medal.split(' ');
-                            return {
-                                name: name.replace(/-/g, ' '),
-                                gold: parseInt(gold),
-                                silver: parseInt(silver),
-                                bronze: parseInt(bronze),
-                                total: parseInt(gold) + parseInt(silver) + parseInt(bronze),
-                                img: this.img_url[name.replaceAll('-', '_')],
-                            };
-                        });
-                    },
-                    sortByName() {
-                        this.countryList.sort((a, b) => a.name.localeCompare(b.name))
-                    },
-                    sortByGold() {
-                        this.countryList.sort((a, b) => b.gold - a.gold);
-                    },
-                    sortByTotal() {
-                        this.countryList.sort((a, b) => b.total - a.total);
-                    },
-                    updateMedals() {
-                        country = this.countryList.find(c => c.name === this.selectedCountry);
+                watch: {
+                    // watch which data?
+                    ? (newCountry) {
+                        country = this.countryList.find(c => c.name === newCountry);
                         if (country) {
-                            country.gold = this.goldMedals;
-                            country.silver = this.silverMedals;
-                            country.bronze = this.bronzeMedals;
-                            country.total = country.gold + country.silver + country.bronze;
-                            alert('資料已更新');
+                            this.goldMedals = country.gold;
+                            this.silverMedals = country.silver;
+                            this.bronzeMedals = country.bronze;
+                        } else {
+                            this.goldMedals = 0;
+                            this.silverMedals = 0;
+                            this.bronzeMedals = 0;
                         }
                     }
+                },
+                created() {
+                this.build_country_list();
+                console.log(this.countryList);
+            },
+                methods: {
+                build_country_list() {
+                    this.countryList = this.medals.map(medal => {
+                        const [name, gold, silver, bronze] = medal.split(' ');
+                        return {
+                            name: name.replace(/-/g, ' '),
+                            gold: parseInt(gold),
+                            silver: parseInt(silver),
+                            bronze: parseInt(bronze),
+                            total: parseInt(gold) + parseInt(silver) + parseInt(bronze),
+                            img: this.img_url[name.replaceAll('-', '_')],
+                        };
+                    });
+                },
+                sortByName() {
+                    this.countryList.sort((a, b) => a.name.localeCompare(b.name))
+                },
+                sortByGold() {
+                    this.countryList.sort((a, b) => b.gold - a.gold);
+                },
+                sortByTotal() {
+                    this.countryList.sort((a, b) => b.total - a.total);
+                },
+                updateMedals() {
+                    country = this.countryList.find(c => c.name === this.selectedCountry);
+                    if (country) {
+                        country.gold = this.goldMedals;
+                        country.silver = this.silverMedals;
+                        country.bronze = this.bronzeMedals;
+                        country.total = country.gold + country.silver + country.bronze;
+                        alert('資料已更新');
+                    }
                 }
-            });
+            }
+            }
+            );
             app.mount('#app')
         </script>
 
