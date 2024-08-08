@@ -65,6 +65,8 @@ The images are stored in `img/xxx.png`:
     }
 ```    
 
+See the ![Reference fig](https://docs.google.com/presentation/d/1S4oSWcHsF3ESJHSEQt-a3xh3t-G7ykZ5igCRfhTbqG8/edit#slide=id.g2f13508a7a7_0_6)
+
 ## v04 country
 * show all coutry image and their medals
 * `created` life cycle, when the vue object is created, run the method `created()`
@@ -74,11 +76,17 @@ The images are stored in `img/xxx.png`:
 learn
 * use `created()` to compute something for further display
 
+See the ![Reference fig](https://docs.google.com/presentation/d/1S4oSWcHsF3ESJHSEQt-a3xh3t-G7ykZ5igCRfhTbqG8/edit#slide=id.g2f13508a7a7_0_6)
+
 
 ## v05 update medals
 * design an input form that we can update the medals status
 * use the `select` component to choose the country
 * design fields for us to input the medals, saving to the countryList data.
+
+See the ![Reference fig](https://docs.google.com/presentation/d/1S4oSWcHsF3ESJHSEQt-a3xh3t-G7ykZ5igCRfhTbqG8/edit#slide=id.g2f13508a7a7_0_21)
+
+
 
 learn
 * `v-model`
@@ -89,3 +97,5 @@ learn
 
 learn
 * `watch`
+
+See the ![Reference fig](https://docs.google.com/presentation/d/1S4oSWcHsF3ESJHSEQt-a3xh3t-G7ykZ5igCRfhTbqG8/edit#slide=id.g2f13508a7a7_0_26)
