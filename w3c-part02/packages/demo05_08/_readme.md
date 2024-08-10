@@ -21,11 +21,19 @@ The way we have included components so far makes them accessible from all *.vue 
 
 Components can be made to be local, meaning that they are only accessible inside a specific *.vue file.
 
+[Local components](https://www.w3schools.com/vue/vue_local-components.php)
+
 ## 08 Slot
 
 Slots are a powerful feature in Vue that allow for more flexible and reusable components.
 
 We use slots in Vue to send content from the parent into the `<template>` of a child component.
+* 08a: 透過 slot 來傳遞 tag 的內容
+* 08b: slot 裡面可以傳遞像 card 的內容（很多元素）
+* 08c: 
+* 08d: Scoped Slot with an Array of Objects
+
+[Slot](https://www.w3schools.com/vue/vue_slots.php)
 
 ## 09 Dynamic components
 
