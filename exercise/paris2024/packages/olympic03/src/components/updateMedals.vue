@@ -34,15 +34,15 @@ export default {
     data() {
         return {
             selectedCountry:"",
-            goldMedals:0,
-            silverMedals:0,
-            bronzeMedals:0,
+            goldMedals:null,
+            silverMedals:null,
+            bronzeMedals:null,
         }
     },
     props: [
         'countryList'
     ],
-    mounted() {
+    mounted() { // just for test
         console.log('Received countryList:', this.countryList);
     },    
     watch: {
@@ -68,7 +68,6 @@ export default {
                     country.silver = this.silverMedals;
                     country.bronze = this.bronzeMedals;
                     country.total = country.gold + country.silver + country.bronze;
-                    alert('資料已更新');
                 }
             this.$emit('updateMedals', this.countryList);
         },

@@ -3,6 +3,10 @@
     <carousel />
 
     <div class="container mt-3">
+        <sort @sortByName="sortByName" @sortByGold="sortByGold" @sortByTotal="sortByTotal"/>
+
+        <updateMedals :countryList="countryList" @updateMedals="updateMedals"/>
+
         <medals :countryList="countryList" />
 
         <paris_footer />
@@ -10,6 +14,8 @@
 </template>
   
 <script>
+import UpdateMedals from './components/updateMedals.vue';
+
 export default {
     data() {
         return {
@@ -70,12 +76,6 @@ export default {
         console.log(this.countryList);
     },
     methods: {
-        // receiveEmit(foodId) {
-        //     let foundFood = this.foods.find(
-        //         food => food.name === foodId
-        //     );
-        //     foundFood.favorite = !foundFood.favorite;
-        // },
         build_country_list() {
             console.log('building conutry list');
             this.countryList = this.medals.map(medal => {
@@ -90,7 +90,19 @@ export default {
                 };
             });
             console.log('country list: ', this.countryList);
-        },        
+        },      
+        sortByName() {
+            this.countryList.sort((a, b) => a.name.localeCompare(b.name))
+        },
+        sortByGold() {
+            this.countryList.sort((a, b) => b.gold - a.gold);
+        },
+        sortByTotal() {
+            this.countryList.sort((a, b) => b.total - a.total);
+        },
+        updateMedals(countryList) {
+            this.countryList = countryList;
+        }
     }
 }
 </script>

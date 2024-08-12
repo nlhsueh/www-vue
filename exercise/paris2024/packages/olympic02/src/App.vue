@@ -3,7 +3,6 @@
     <carousel />
 
     <div class="container mt-3">
-        <sort @sortByName="sortByName" @sortByGold="sortByName" @sortByTotal="sortByName"/>
         <medals :countryList="countryList"/>
 
         <paris_footer />
@@ -71,12 +70,6 @@ export default {
         console.log(this.countryList);
     },
     methods: {
-        // receiveEmit(foodId) {
-        //     let foundFood = this.foods.find(
-        //         food => food.name === foodId
-        //     );
-        //     foundFood.favorite = !foundFood.favorite;
-        // },
         build_country_list() {
             console.log('building conutry list');
             this.countryList = this.medals.map(medal => {

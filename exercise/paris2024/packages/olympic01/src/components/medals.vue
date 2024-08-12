@@ -70,20 +70,6 @@
                 bronzeMedals: 0,
             }
         },
-        watch: {
-            selectedCountry(newCountry) {
-                country = this.countryList.find(c => c.name === newCountry);
-                if (country) {
-                    this.goldMedals = country.gold;
-                    this.silverMedals = country.silver;
-                    this.bronzeMedals = country.bronze;
-                } else {
-                    this.goldMedals = 0;
-                    this.silverMedals = 0;
-                    this.bronzeMedals = 0;
-                }
-            }
-        },
         created() {
             this.build_country_list();
             console.log(this.countryList);
@@ -102,25 +88,6 @@
                     };
                 });
             },
-            sortByName() {
-                this.countryList.sort((a, b) => a.name.localeCompare(b.name))
-            },
-            sortByGold() {
-                this.countryList.sort((a, b) => b.gold - a.gold);
-            },
-            sortByTotal() {
-                this.countryList.sort((a, b) => b.total - a.total);
-            },
-            updateMedals() {
-                country = this.countryList.find(c => c.name === this.selectedCountry);
-                if (country) {
-                    country.gold = this.goldMedals;
-                    country.silver = this.silverMedals;
-                    country.bronze = this.bronzeMedals;
-                    country.total = country.gold + country.silver + country.bronze;
-                    alert('資料已更新');
-                }
-            }
         }
     }         
 </script>
