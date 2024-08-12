@@ -3,7 +3,8 @@
     <carousel />
 
     <div class="container mt-3">
-        <medals :countryList="countryList" />
+        <sort @sortByName="sortByName" @sortByGold="sortByName" @sortByTotal="sortByName"/>
+        <medals :countryList="countryList"/>
 
         <paris_footer />
     </div>
