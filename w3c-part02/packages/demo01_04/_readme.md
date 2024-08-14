@@ -22,22 +22,23 @@ Example:
 * An App can send properties (props) to the components (**AppFood02a**)
   * The App side:
 ```javascript
- <food-item food-name="Apples" />
-```
-  * The component side
-```javascript
-<template>
-    <div>
-        <h2>{{ foodName }}</h2>
-    </div>
-</template>
+// App side:
 
-<script>
-export default {
-    props: [
-        'foodName'
-    ]
-};
+    <food-item food-name="Apples" />
+
+// The component side:
+    <template>
+        <div>
+            <h2>{{ foodName }}</h2>
+        </div>
+    </template>
+
+    <script>
+    export default {
+        props: [
+            'foodName'
+        ]
+    };
 </script>
 ```
 Example:
