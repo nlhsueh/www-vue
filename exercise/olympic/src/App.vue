@@ -3,13 +3,19 @@
     <carousel />
 
     <div class="container mt-3">
-        <medals :countryList="countryList"/>
+        <sort @sortByName="sortByName" @sortByGold="sortByGold" @sortByTotal="sortByTotal"/>
+
+        <updateMedals :countryList="countryList" @updateMedals="updateMedals"/>
+
+        <medals :countryList="countryList" />
 
         <paris_footer />
     </div>
 </template>
   
 <script>
+import UpdateMedals from './components/updateMedals.vue';
+
 export default {
     data() {
         return {
@@ -84,7 +90,19 @@ export default {
                 };
             });
             console.log('country list: ', this.countryList);
-        },        
+        },      
+        sortByName() {
+            this.countryList.sort((a, b) => a.name.localeCompare(b.name))
+        },
+        sortByGold() {
+            this.countryList.sort((a, b) => b.gold - a.gold);
+        },
+        sortByTotal() {
+            this.countryList.sort((a, b) => b.total - a.total);
+        },
+        updateMedals(countryList) {
+            this.countryList = countryList;
+        }
     }
 }
 </script>
