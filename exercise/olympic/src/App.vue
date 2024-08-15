@@ -3,11 +3,17 @@
     <carousel />
 
     <div class="container mt-3">
-        <sort @sortByName="sortByName" @sortByGold="sortByGold" @sortByTotal="sortByTotal"/>
+        <sort @sortByName="sortByName" @sortByGold="sortByGold" @sortByTotal="sortByTotal" />
 
-        <updateMedals :countryList="countryList" @updateMedals="updateMedals"/>
+        <updateMedals :countryList="countryList" @updateMedals="updateMedals" />
 
-        <medals :countryList="countryList" />
+        <div class="row justify-content-center" id="medalTable">
+            <div v-for="country in countryList" :key="country.name" class="country-card col-lg-2 col-md-3 col-sm-4 col-6">
+                <c_medal :countryName="country.name" :countryImg="country.img" :gold="country.gold" :silver="country.silver"
+                    :bronze="country.bronze" />
+            </div>
+        </div>
+
 
         <paris_footer />
     </div>
@@ -20,26 +26,26 @@ export default {
     data() {
         return {
             medals: [
-                    "United-States 3 8 9",
-                    "France 5 8 3",
-                    "Japan 6 2 4",
-                    "China 5 5 2",
-                    "Great-Britain 2 5 3",
-                    "Australia 5 4 0",
-                    "Republic-of-Korea 5 3 1",
-                    "Italy 2 3 3",
-                    "Canada 2 1 2",
-                    "Hong-Kong 2 0 1",
-                    "Kazakhstan 1 0 2",
-                    "South-Africa 1 0 2",
-                    "Brazil 0 1 2",
-                    "Sweden 0 1 2",
-                    "Germany 2 0 0",
-                    "Belgium 1 0 1",
-                    "Turkey 0 1 1",
-                    "India 0 0 2",
-                    "Moldova 0 0 2",
-                    "Azerbaijan 1 0 0"
+                "United-States 3 8 9",
+                "France 5 8 3",
+                "Japan 6 2 4",
+                "China 5 5 2",
+                "Great-Britain 2 5 3",
+                "Australia 5 4 0",
+                "Republic-of-Korea 5 3 1",
+                "Italy 2 3 3",
+                "Canada 2 1 2",
+                "Hong-Kong 2 0 1",
+                "Kazakhstan 1 0 2",
+                "South-Africa 1 0 2",
+                "Brazil 0 1 2",
+                "Sweden 0 1 2",
+                "Germany 2 0 0",
+                "Belgium 1 0 1",
+                "Turkey 0 1 1",
+                "India 0 0 2",
+                "Moldova 0 0 2",
+                "Azerbaijan 1 0 0"
             ],
             img_url: {
                 Australia: "australia.png",
@@ -68,7 +74,7 @@ export default {
             selectedCountry: "",
             goldMedals: 0,
             silverMedals: 0,
-            bronzeMedals: 0,            
+            bronzeMedals: 0,
         };
     },
     created() {
@@ -90,7 +96,7 @@ export default {
                 };
             });
             console.log('country list: ', this.countryList);
-        },      
+        },
         sortByName() {
             this.countryList.sort((a, b) => a.name.localeCompare(b.name))
         },
@@ -108,6 +114,4 @@ export default {
 </script>
 
   
-<style>
-
-</style>  
+<style></style>  
