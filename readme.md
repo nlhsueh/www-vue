@@ -1,3 +1,12 @@
 
-gotop code
-* Please download the book example from [HERE](http://books.gotop.com.tw/download/AEL025800)
+## How to run?
+
+1. install
+```
+cd olympic
+npm install
+```
+2. run
+```
+npm run dev
+```
