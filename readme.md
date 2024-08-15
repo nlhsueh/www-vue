@@ -1,3 +1,3 @@
 
 
-In this version, we try 'router' architecture.
+Resolve the state problem by vuex.
