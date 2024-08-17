@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI 記錄系統</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #42b983;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .buttons button {
+            background-color: #42b983;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .buttons button:hover {
+            background-color: #369a7e;
+        }
+        .list-group {
+            margin-top: 20px;
+        }
+        .list-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .list-item h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+        .list-item p {
+            margin: 5px 0 0;
+            color: #666;
+            font-size: 14px;
+        }
+        .bmi-result {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            color: #42b983;
+        }
+        .status {
+            margin-top: 5px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .underweight {
+            color: orange;
+        }
+        .healthy {
+            color: green;
+        }
+        .overweight {
+            color: #ff9800;
+        }
+        .obesity {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="app" class="container">
+    <h1>BMI 記錄系統</h1>
+
+    <div>
+        <div class="form-group">
+            <label>姓名：</label>
+            <input v-model="name" type="text" placeholder="輸入姓名">
+        </div>
+        <div class="form-group">
+            <label>體重 (kg)：</label>
+            <input v-model="weight" type="number" placeholder="輸入體重">
+        </div>
+        <div class="form-group">
+            <label>身高 (cm)：</label>
+            <input v-model="height" type="number" placeholder="輸入身高">
+        </div>
+        <div class="bmi-result" v-if="bmi !== null">
+            BMI：{{ bmi.toFixed(2) }}
+            <div class="status" :class="bmiStatusClass">{{ bmiStatus }}</div>
+        </div>
+        <div class="buttons">
+            <button @click="addPerson">添加到列表</button>
+            <button @click="clearList">清除紀錄列表</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>篩選 BMI 狀態：</label>
+        <select v-model="filterStatus">
+            <option value="">全部</option>
+            <option value="體重過輕">體重過輕</option>
+            <option value="健康體位">健康體位</option>
+            <option value="過重">過重</option>
+            <option value="輕度肥胖">輕度肥胖</option>
+            <option value="中度肥胖">中度肥胖</option>
+            <option value="重度肥胖">重度肥胖</option>
+        </select>
+    </div>
+
+    <div class="list-group">
+        <h2>記錄列表</h2>
+        <div v-for="person in filteredPeople" :key="person.name" class="list-item">
+            <h3>{{ person.name }}</h3>
+            <p>身高：{{ person.height }}cm，體重：{{ person.weight }}kg，BMI：{{ person.bmi.toFixed(2) }}</p>
+            <div class="status" :class="person.statusClass">{{ person.status }}</div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                name: '',
+                weight: '',
+                height: '',
+                bmi: null,
+                people: [],
+                filterStatus: ''
+            };
+        },
+        computed: {
+            bmiStatus() {
+                if (this.bmi === null) return '';
+                if (this.bmi < 18.5) return '體重過輕';
+                if (this.bmi >= 18.5 && this.bmi < 24) return '健康體位';
+                if (this.bmi >= 24 && this.bmi < 27) return '過重';
+                if (this.bmi >= 27 && this.bmi < 30) return '輕度肥胖';
+                if (this.bmi >= 30 && this.bmi < 35) return '中度肥胖';
+                if (this.bmi >= 35) return '重度肥胖';
+                return '';
+            },
+            bmiStatusClass() {
+                if (this.bmi === null) return '';
+                if (this.bmi < 18.5) return 'underweight';
+                if (this.bmi >= 18.5 && this.bmi < 24) return 'healthy';
+                if (this.bmi >= 24 && this.bmi < 27) return 'overweight';
+                if (this.bmi >= 27) return 'obesity';
+                return '';
+            },
+            filteredPeople() {
+                let filteredPeople = this.people;
+
+                if (this.filterStatus) {
+                    filteredPeople = filteredPeople.filter(person =>
+                        person.status === this.filterStatus
+                    );
+                }
+
+                return filteredPeople;
+            }
+        },
+        methods: {
+            calculateBMI() {
+                if (this.weight && this.height) {
+                    this.bmi = this.weight / ((this.height / 100) ** 2);
+                } else {
+                    this.bmi = null;
+                }
+            },
+            addPerson() {
+                if (this.name && this.weight && this.height && this.bmi !== null) {
+                    this.people.push({
+                        name: this.name,
+                        weight: this.weight,
+                        height: this.height,
+                        bmi: this.bmi,
+                        status: this.bmiStatus,
+                        statusClass: this.bmiStatusClass
+                    });
+                    this.clearForm();
+                } else {
+                    alert("請填寫所有欄位。");
+                }
+            },
+            clearForm() {
+                this.name = '';
+                this.weight = '';
+                this.height = '';
+                this.bmi = null;
+            },
+            clearList() {
+                this.people = [];
+            }
+        },
+        watch: {
+            weight() {
+                this.calculateBMI();
+            },
+            height() {
+                this.calculateBMI();
+            }
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>

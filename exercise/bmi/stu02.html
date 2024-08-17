@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <style type="text/css">
+        .center {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #00a3af;
+            border-radius: 10px;
+            background-color: #f8f8f8;
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            color: #004c54;
+        }
+
+        p.description {
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 95%;
+            padding: 10px;            
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="button"] {
+            width: 45%;
+            padding: 10px;
+            margin: 5px;
+            background-color: #007b7f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover {
+            background-color: #005f61;
+        }
+
+        .buttons {
+            text-align: center;
+        }
+
+        p.result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .underweight {
+            color: purple;
+        }
+
+        .normal {
+            color: green;
+        }
+
+        .overweight {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="center">
+        <h2>身體質量指數 (BMI) 計算器</h2>
+        <p class="description">世界衛生組織建議以身體質量指數 (Body Mass Index, BMI) 來衡量肥胖程度，其計算公式是以體重 (公斤) 除以身高 (公尺) 的平方。</p>
+
+        <form @submit.prevent="addPerson">
+            <label for="personName">姓名</label>
+            <input type="text" id="personName" v-model="newPerson.name" placeholder="請輸入姓名" required>
+
+            <label for="height">身高 (公分)</label>
+            <input type="number" id="height" v-model="newPerson.height" placeholder="請輸入身高" min="145" max="190" required>
+
+            <label for="weight">體重 (公斤)</label>
+            <input type="number" id="weight" v-model="newPerson.weight" placeholder="請輸入體重" min="45" max="90" required>
+
+            <div class="buttons">
+                <input type="button" value="立即計算" @click="addPerson">
+                <input type="button" value="全部清除" @click="clearForm">
+                <input type="button" value="隨機生成20組資料" @click="generateRandomData">
+                <input type="button" value="清除所有測量記錄" @click="clearAllRecords">
+                <input type="button" :value="toggleButtonLabel" @click="toggleStatisticsVisibility">
+            </div>
+        </form>
+
+        <p v-if="addedPersonMessage" :class="bmiCategoryClass" class="result" v-html="addedPersonMessage"></p>
+
+        <!-- 統計數據顯示區域 -->
+        <div v-show="showStatistics" id="divStatistics">
+            <h3>測量紀錄</h3>
+            <p>{{ summary }}</p>
+
+            <hr>
+
+            <h3 style="color:red">過重，需要運動 ⛹️</h3>
+            <ul>
+                <li v-for="person in overWeightPersons" :key="person.name">
+                    {{ person.name }} : {{ person.height }}cm, {{ person.weight }}kg, BMI: {{ person.bmi }}
+                </li>
+            </ul>
+
+            <hr>
+
+            <h3 style="color:purple">過輕，需要進食 🍖</h3>
+            <ul>
+                <li v-for="person in underWeightPersons" :key="person.name">
+                    {{ person.name }} : {{ person.height }}cm, {{ person.weight }}kg, BMI: {{ person.bmi }}
+                </li>
+            </ul>
+
+            <hr>
+
+            <h3 style="color:green">👍 正常體重 👍</h3>
+            <ul>
+                <li v-for="person in normalWeightPersons" :key="person.name">
+                    {{ person.name }} : {{ person.height }}cm, {{ person.weight }}kg, BMI: {{ person.bmi }}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    persons: [],
+                    overWeightPersons: [],
+                    underWeightPersons: [],
+                    normalWeightPersons: [],
+                    newPerson: {
+                        name: '',
+                        height: '',
+                        weight: ''
+                    },
+                    showStatistics: false,
+                    addedPersonMessage: '',
+                    showStatisticsVisibility: true,
+                    bmiCategoryClass: ''
+                }
+            },
+            computed: {
+                summary() {
+                    return `過重: ${this.overWeightPersons.length}人；過輕: ${this.underWeightPersons.length}人；正常: ${this.normalWeightPersons.length}人`;
+                },
+                toggleButtonLabel() {
+                    return this.showStatisticsVisibility ? '隱藏測量記錄' : '顯示測量記錄';
+                }
+            },
+            methods: {
+                addPerson() {
+                    let personName = this.newPerson.name;
+                    let height = parseFloat(this.newPerson.height);
+                    let weight = parseFloat(this.newPerson.weight);
+                    let bodyMassIndex = (weight / ((height / 100) * (height / 100))).toFixed(2);
+
+                    const personData = { name: personName, height: height, weight: weight, bmi: bodyMassIndex };
+
+                    if (bodyMassIndex < 18.5) {
+                        this.bmiCategoryClass = 'underweight';
+                        this.addedPersonMessage = `<strong>${personName}</strong>: ${height}cm, ${weight}kg, BMI 是 <strong>${bodyMassIndex}</strong>，狀態：過輕`;
+                        this.underWeightPersons.push(personData);
+                    } else if (bodyMassIndex > 25) {
+                        this.bmiCategoryClass = 'overweight';
+                        this.addedPersonMessage = `<strong>${personName}</strong>: ${height}cm, ${weight}kg, BMI 是 <strong>${bodyMassIndex}</strong>，狀態：過重`;
+                        this.overWeightPersons.push(personData);
+                    } else {
+                        this.bmiCategoryClass = 'normal';
+                        this.addedPersonMessage = `<strong>${personName}</strong>: ${height}cm, ${weight}kg, BMI 是 <strong>${bodyMassIndex}</strong>，狀態：正常`;
+                        this.normalWeightPersons.push(personData);
+                    }
+
+                    this.persons.push(personData);
+
+                    this.newPerson.name = '';
+                    this.newPerson.height = '';
+                    this.newPerson.weight = '';
+
+                    this.showStatistics = true; // 顯示測量紀錄
+                },
+                clearForm() {
+                    this.newPerson.name = '';
+                    this.newPerson.height = '';
+                    this.newPerson.weight = '';
+                    this.addedPersonMessage = '';
+                    this.bmiCategoryClass = '';
+                },
+                toggleStatisticsVisibility() {
+                    this.showStatisticsVisibility = !this.showStatisticsVisibility;
+                    this.showStatistics = this.showStatisticsVisibility;
+                },
+                generateRandomData() {
+                    for (let i = 0; i < 20; i++) {
+                        let personName = `P${Math.floor(Math.random() * 20) + 1}`;
+                        let height = Math.floor(Math.random() * (190 - 145 + 1)) + 145;
+                        let weight = Math.floor(Math.random() * (90 - 45 + 1)) + 45;
+                        let bodyMassIndex = (weight / ((height / 100) * (height / 100))).toFixed(2);
+
+                        const personData = { name: personName, height: height, weight: weight, bmi: bodyMassIndex };
+
+                        if (bodyMassIndex < 18.5) {
+                            this.underWeightPersons.push(personData);
+                        } else if (bodyMassIndex > 25) {
+                            this.overWeightPersons.push(personData);
+                        } else {
+                            this.normalWeightPersons.push(personData);
+                        }
+
+                        this.persons.push(personData);
+                    }
+                    this.showStatistics = true; // 顯示測量紀錄
+                },
+                clearAllRecords() {
+                    this.persons = [];
+                    this.overWeightPersons = [];
+                    this.underWeightPersons = [];
+                    this.normalWeightPersons = [];
+                    this.addedPersonMessage = '';
+                    this.showStatistics = false;
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>
