@@ -1,10 +1,5 @@
-
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-
-// import App from './App.vue'
-// import FoodItems from './components/FoodItems.vue'
-// import AnimalCollection from './components/AnimalCollection.vue'
 
 import App from './App.vue'
 import carousel from './components/carousel.vue'
@@ -22,7 +17,6 @@ const router = createRouter({
     ]
 });
 
-
 const app = createApp(App)
 
 app.use(router);
@@ -30,6 +24,5 @@ app.component('carousel', carousel);
 app.component('sort', sort);
 app.component('c_medal', c_medal);
 app.component('paris_footer', paris_footer);
-
 
 app.mount('#app')
