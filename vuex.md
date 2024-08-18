@@ -121,3 +121,43 @@ If you use Vuex to manage the state of your application, you can solve the probl
 - **Vuex** provides a robust solution for managing and sharing state across components, avoiding the limitations of `provide/inject`.
 - You define your shared state in a centralized store, access it via computed properties, and update it with actions and mutations.
 - This approach ensures that your application’s state remains consistent, reactive, and easy to manage.
+
+
+## directory
+
+my-vue-project/
+│
+├── public/                     # Static assets (not processed by Webpack)
+│   └── index.html              # Main HTML file
+│
+├── src/
+│   ├── assets/                 # Project assets like images, fonts, etc.
+│   │   └── logo.png
+│   │
+│   ├── components/             # Vue components
+│   │   ├── Carousel.vue
+│   │   ├── MedalCard.vue
+│   │   └── Footer.vue
+│   │
+│   ├── router/                 # Vue Router configuration
+│   │   └── index.js
+│   │
+│   ├── store/                  # Vuex store directory
+│   │   ├── index.js            # Main Vuex store setup
+│   │   ├── actions.js          # Global actions (optional)
+│   │   ├── mutations.js        # Global mutations (optional)
+│   │   ├── state.js            # Global state (optional)
+│   │   └── modules/            # Vuex modules (optional)
+│   │       └── medals.js       # Example module (can have multiple modules)
+│   │
+│   ├── views/                  # Vue views (pages)
+│   │   ├── MedalsView.vue      # Page displaying medal information
+│   │   └── UpdateMedalsView.vue# Page for updating medals
+│   │
+│   ├── App.vue                 # Root component
+│   ├── main.js                 # Entry point, bootstraps the app
+│   └── style.css               # Global styles (optional)
+│
+├── .gitignore                  # Git ignore rules
+├── package.json                # Project metadata and dependencies
+└── README.md                   # Project documentation
