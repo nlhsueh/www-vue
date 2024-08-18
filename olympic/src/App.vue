@@ -2,11 +2,6 @@
 <template>
     <carousel />
 
-    <!-- <ul>
-        <li><router-link to="/medals">Medals</router-link></li>
-        <li><router-link to="/updateMedals">Update Medals</router-link></li>
-    </ul> -->
-
     <ul class="nav">
         <li class="nav-item">
             <router-link to="/medals" class="nav-link active">Medals</router-link>
@@ -24,7 +19,6 @@
 </template>
   
 <script>
-// import UpdateMedals from './components/updateMedals.vue';
 
 export default {
     data() {
@@ -53,6 +47,7 @@ export default {
                 United_States: "united-states.png"
             },
             countryList: [
+                {'gold':12, 'silver':13, 'broze':20,},
             ],
             selectedCountry: "",
             goldMedals: 0,
@@ -63,7 +58,7 @@ export default {
     async created() {
         await this.fetch_medals();
         this.build_country_list();
-        console.log(this.countryList);
+        console.log('>>>>>> countryList built in App <<<<<<<', this.countryList);
     },
     methods: {
         async fetch_medals() {
@@ -101,6 +96,11 @@ export default {
         updateMedals(countryList) {
             this.countryList = countryList;
         }
+    },
+    provide() {
+      return {
+        countryList: () => this.countryList,
+      }
     }
 }
 </script>

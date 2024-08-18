@@ -5,7 +5,7 @@
                 <div class="col">
                     <select class="form-select" v-model="selectedCountry" id="country-select">
                         <option disabled value="">請選擇國家</option>
-                        <option v-for="c in countryList" :key="c.name" :value="c.name">
+                        <option v-for="c in actualCountryList" :key="c.name" :value="c.name">
                             {{ c.name }}
                         </option>
                     </select>
@@ -39,15 +39,15 @@ export default {
             bronzeMedals:null,
         }
     },
-    props: [
-        'countryList'
-    ],
-    mounted() { // just for test
-        console.log('Received countryList:', this.countryList);
+    inject: ['countryList'],
+    computed: {
+      actualCountryList() {
+          return this.countryList();
+      }
     },    
     watch: {
         selectedCountry(newCountry) {
-            const country = this.countryList.find(c => c.name === newCountry);
+            const country = this.actualCountryList.find(c => c.name === newCountry);
             if (country) {
                 this.goldMedals = country.gold;
                 this.silverMedals = country.silver;
@@ -62,14 +62,14 @@ export default {
 
     methods: {
         updateMedals() {
-            const country = this.countryList.find(c => c.name === this.selectedCountry);
+            const country = this.actualCountryList.find(c => c.name === this.selectedCountry);
                 if (country) {
                     country.gold = this.goldMedals;
                     country.silver = this.silverMedals;
                     country.bronze = this.bronzeMedals;
                     country.total = country.gold + country.silver + country.bronze;
                 }
-            this.$emit('updateMedals', this.countryList);
+            this.$emit('updateMedals', this.actualCountryList);
         },
     }
 };
