@@ -39,8 +39,8 @@ export default {
             bronzeMedals:null,
         }
     },
-    props: [
-        'countryList'
+    inject: [
+        ['countryList']
     ],
     mounted() { // just for test
         console.log('Received countryList:', this.countryList);
@@ -59,7 +59,9 @@ export default {
             }
         }
     },
-
+    created() {
+        console.log('ChildComponent created', this.countryList);
+    },
     methods: {
         updateMedals() {
             const country = this.countryList.find(c => c.name === this.selectedCountry);

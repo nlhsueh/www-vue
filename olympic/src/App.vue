@@ -63,7 +63,7 @@ export default {
     async created() {
         await this.fetch_medals();
         this.build_country_list();
-        console.log(this.countryList);
+        console.log('App async created', this.countryList);
     },
     methods: {
         async fetch_medals() {
@@ -101,7 +101,13 @@ export default {
         updateMedals(countryList) {
             this.countryList = countryList;
         }
-    }
+    },
+    provide () {
+        return {
+            myCountryList: { from: 'countryList' },
+            goldMedals: { from: 'gold' }
+        }
+    }    
 }
 </script>
 
