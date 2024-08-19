@@ -4,16 +4,18 @@ import { createRouter, createWebHistory } from 'vue-router'
 import store from './store';
 
 import App from './App.vue'
+import medals from './views/medals.vue'
+import updateMedals from './views/updateMedals.vue'
+import home from './views/home.vue'
 import carousel from './components/carousel.vue'
 import c_medal from './components/c_medal.vue'
-import medals from './views/medals.vue'
 import sort from './components/sort.vue'
-import updateMedals from './views/updateMedals.vue'
 import paris_footer from './components/footer.vue'
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
+        { path: '/', component: home },
         { path: '/medals', component: medals },
         { path: '/updateMedals', component: updateMedals },
     ]

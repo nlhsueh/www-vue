@@ -161,3 +161,52 @@ my-vue-project/
 ├── .gitignore                  # Git ignore rules
 ├── package.json                # Project metadata and dependencies
 └── README.md                   # Project documentation
+
+
+## mapState
+
+The `...` in JavaScript, often referred to as the "spread syntax" or "spread operator," is used to spread or expand elements of an iterable (like an array or object) into individual elements. In the context of Vue's `computed` properties and Vuex's `mapState`, it is used to integrate or "spread" the mapped state properties into the component's `computed` properties.
+
+### In the Given Context:
+```javascript
+computed: {
+  ...mapState({
+    countryList: (state) => state.countryList,
+  }),
+},
+```
+
+### What Does `...mapState` Do Here?
+
+1. **`mapState` Function**:
+   - `mapState` is a Vuex helper function that helps map state from the Vuex store to your component’s computed properties.
+   - In your case, `mapState` is mapping the `countryList` from the Vuex store to a computed property called `countryList` in your component.
+
+2. **Spread Syntax (`...`)**:
+   - The spread syntax `...` is used here to "spread" the result of `mapState` into the `computed` properties of the component.
+   - The result of `mapState` is an object where each key is the name of the computed property, and each value is a function that returns the corresponding state from the Vuex store.
+   - By using the spread syntax, you effectively insert all the properties from the object returned by `mapState` directly into the `computed` object.
+
+### How It Works:
+- `mapState` returns an object like this:
+  ```javascript
+  {
+    countryList: function() {
+      return this.$store.state.countryList;
+    }
+  }
+  ```
+- The `...` operator spreads this object into the `computed` object, so it’s as if you had written:
+  ```javascript
+  computed: {
+    countryList() {
+      return this.$store.state.countryList;
+    }
+  }
+  ```
+- This means that `countryList` becomes a computed property in your component, and its value is automatically updated whenever the `countryList` in the Vuex store changes.
+
+### Summary:
+- The `...` (spread syntax) is used to expand the properties returned by `mapState` directly into the `computed` properties of the component.
+- This makes it easier and cleaner to map Vuex state properties to your component without having to write out each computed property manually.
+- It helps maintain a concise and readable code structure, especially when mapping multiple state properties.

@@ -30,49 +30,58 @@
 </template>
 
 <script>
-export default {
+  import { mapState, mapMutations } from 'vuex';
+  
+  export default {
     data() {
-        return {
-            selectedCountry:"",
-            goldMedals:null,
-            silverMedals:null,
-            bronzeMedals:null,
-        }
+      return {
+        selectedCountry: "",
+        goldMedals: null,
+        silverMedals: null,
+        bronzeMedals: null,
+      };
     },
-    inject: [
-        ['countryList']
-    ],
-    mounted() { // just for test
-        console.log('Received countryList:', this.countryList);
-    },    
+    computed: {
+      ...mapState(['countryList']),
+    },
     watch: {
-        selectedCountry(newCountry) {
-            const country = this.countryList.find(c => c.name === newCountry);
-            if (country) {
-                this.goldMedals = country.gold;
-                this.silverMedals = country.silver;
-                this.bronzeMedals = country.bronze;
-            } else {
-                this.goldMedals = 0;
-                this.silverMedals = 0;
-                this.bronzeMedals = 0;
-            }
+      selectedCountry(newCountry) {
+        const country = this.countryList.find(c => c.name === newCountry);
+        if (country) {
+          this.goldMedals = country.gold;
+          this.silverMedals = country.silver;
+          this.bronzeMedals = country.bronze;
+        } else {
+          this.goldMedals = 0;
+          this.silverMedals = 0;
+          this.bronzeMedals = 0;
         }
-    },
-    created() {
-        console.log('ChildComponent created', this.countryList);
+      }
     },
     methods: {
-        updateMedals() {
-            const country = this.countryList.find(c => c.name === this.selectedCountry);
-                if (country) {
-                    country.gold = this.goldMedals;
-                    country.silver = this.silverMedals;
-                    country.bronze = this.bronzeMedals;
-                    country.total = country.gold + country.silver + country.bronze;
-                }
-            this.$emit('updateMedals', this.countryList);
-        },
+      ...mapMutations(['updateMedalsInStore']),
+  
+      updateMedals() {
+        const country = this.countryList.find(c => c.name === this.selectedCountry);
+        if (country) {            
+          const updatedCountry = {
+            ...country,
+            gold: this.goldMedals,
+            silver: this.silverMedals,
+            bronze: this.bronzeMedals,
+            total: this.goldMedals + this.silverMedals + this.bronzeMedals,
+          };
+          this.updateMedalsInStore(updatedCountry);
+        }
+        else {
+            console.log('Country not fould');
+        }
+      },
     }
-};
-</script>
+  };
+  </script>
+  
+  <style>
+  /* Your style code here */
+  </style>
+  
