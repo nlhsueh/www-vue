@@ -3,24 +3,28 @@
     <carousel />
 
     <div class="container mt-3">
-        <sort @sortByName="sortByName" @sortByGold="sortByGold" @sortByTotal="sortByTotal" />
 
-        <updateMedals :countryList="countryList" @updateMedals="updateMedals" />
+        <div v-if="!selectedCountry">
+            <sort @sortByName="sortByName" @sortByGold="sortByGold" @sortByTotal="sortByTotal" />
 
-        <div class="row justify-content-center" id="medalTable">
-            <div v-for="country in countryList" :key="country.name" class="country-card col-lg-2 col-md-3 col-sm-4 col-6">
-                <c_medal :countryName="country.name" :countryImg="country.img" :gold="country.gold" :silver="country.silver"
-                    :bronze="country.bronze" />
+            <updateMedals :countryList="countryList" @updateMedals="updateMedals" />
+
+            <div class="row justify-content-center" id="medalTable">
+                <div v-for="country in countryList" :key="country.name" class="country-card col-lg-2 col-md-3 col-sm-4 col-6">
+                    <c_medal :countryName="country.name" :countryImg="country.img" :gold="country.gold" :silver="country.silver" :bronze="country.bronze" @showDetails="displayMedalDetails" />
+                </div>
             </div>
         </div>
 
+        <div v-if="selectedCountry" class="mt-3">
+            <country_details :countryName="selectedCountry" :countryImg="countryImg" :gold="gold" :silver="silver" :bronze="bronze" @clearSelection="clearSelectedCountry"/>
+        </div>        
 
         <paris_footer />
     </div>
 </template>
   
 <script>
-import UpdateMedals from './components/updateMedals.vue';
 
 export default {
     data() {
@@ -50,7 +54,8 @@ export default {
             },
             countryList: [
             ],
-            selectedCountry: "",
+            selectedCountry: null,
+            countryImg: null,            
             goldMedals: 0,
             silverMedals: 0,
             bronzeMedals: 0,
@@ -96,7 +101,19 @@ export default {
         },
         updateMedals(countryList) {
             this.countryList = countryList;
-        }
+        },
+        displayMedalDetails(country) {
+            console.log(country, ' is clicked');
+            this.selectedCountry = country.countryName;
+            this.countryImg = country.countryImg;
+            this.gold = country.gold;
+            this.silver = country.silver;
+            this.bronze = country.bronze;            
+            // this.$bvModal.show('medalDetailsModal');
+        },
+        clearSelectedCountry() {
+            this.selectedCountry = null;
+        },        
     }
 }
 </script>

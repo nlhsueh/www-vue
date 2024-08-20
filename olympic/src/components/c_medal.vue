@@ -1,6 +1,6 @@
 
 <template>
-    <div class="card-body">
+    <div class="card-body" @click="showDetails">
         <h5 class="card-title"> {{ countryName }}</h5>
         <img :src="'/img/' + countryImg" class="card-img-top">
         <div class="medals mt-2">
@@ -14,6 +14,17 @@
 <script>
 export default {
     props: ['countryName', 'countryImg', 'gold', 'silver', 'bronze'],
+    methods: {
+        showDetails() {
+            this.$emit('showDetails', {
+                countryName: this.countryName,
+                countryImg: this.countryImg,
+                gold: this.gold,
+                silver: this.silver,
+                bronze: this.bronze
+            });
+        }
+    }
 }        
 </script>
 
