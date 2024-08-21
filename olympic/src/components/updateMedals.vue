@@ -1,7 +1,7 @@
 <template>
     <div class="row m-3">
         <form @submit.prevent="updateMedals">
-            <div class="row m-3">
+            <div class="row m-3" >
                 <div class="col">
                     <select class="form-select" v-model="selectedCountry" id="country-select">
                         <option disabled value="">請選擇國家</option>
@@ -33,26 +33,32 @@
 export default {
     data() {
         return {
-            selectedCountry:"",
+            selectedCountry:null,
             goldMedals:null,
             silverMedals:null,
             bronzeMedals:null,
         }
     },
+
     props: [
-        'countryList'
+        'countryList', 'selectedCountryProp'
     ],
-    mounted() { // just for test
-        console.log('Received countryList:', this.countryList);
+
+    mounted() { 
+        if (this.selectedCountryProp) {
+            this.selectedCountry = this.selectedCountryProp; 
+        } 
     },    
+
     watch: {
         selectedCountry(newCountry) {
-            const country = this.countryList.find(c => c.name === newCountry);
+            const country = this.countryList.find(c => c.name === this.selectedCountry);
             if (country) {
                 this.goldMedals = country.gold;
                 this.silverMedals = country.silver;
                 this.bronzeMedals = country.bronze;
             } else {
+                console.log('Country not found', country);
                 this.goldMedals = 0;
                 this.silverMedals = 0;
                 this.bronzeMedals = 0;
@@ -62,13 +68,13 @@ export default {
 
     methods: {
         updateMedals() {
-            const country = this.countryList.find(c => c.name === this.selectedCountry);
-                if (country) {
-                    country.gold = this.goldMedals;
-                    country.silver = this.silverMedals;
-                    country.bronze = this.bronzeMedals;
-                    country.total = country.gold + country.silver + country.bronze;
-                }
+            const country = this.countryList.find(c => c.name === this.selectedCountry);                    
+            if (country) {
+                country.gold = this.goldMedals;
+                country.silver = this.silverMedals;
+                country.bronze = this.bronzeMedals;
+                country.total = country.gold + country.silver + country.bronze;
+            }
             this.$emit('updateMedals', this.countryList);
         },
     }

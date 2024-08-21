@@ -7,7 +7,7 @@
         <div v-if="!selectedCountry">
             <sort @sortByName="sortByName" @sortByGold="sortByGold" @sortByTotal="sortByTotal" />
 
-            <updateMedals :countryList="countryList" @updateMedals="updateMedals" />
+            <updateMedals :countryList="countryList" :selectedCountryProp="selectedCountry" @updateMedals="updateMedals" />
 
             <div class="row justify-content-center" id="medalTable">
                 <div v-for="country in countryList" :key="country.name" class="country-card col-lg-2 col-md-3 col-sm-4 col-6">
@@ -17,7 +17,7 @@
         </div>
 
         <div v-if="selectedCountry" class="mt-3">
-            <country_details :countryName="selectedCountry" :countryImg="countryImg" :gold="gold" :silver="silver" :bronze="bronze" @clearSelection="clearSelectedCountry"/>
+            <country_details :countryList="countryList" :countryName="selectedCountry" :countryImg="countryImg" :gold="gold" :silver="silver" :bronze="bronze" @clearSelection="clearSelectedCountry"/>
         </div>        
 
         <paris_footer />
@@ -64,7 +64,7 @@ export default {
     async created() {
         await this.fetch_medals();
         this.build_country_list();
-        console.log(this.countryList);
+        // console.log(this.countryList);
     },
     methods: {
         async fetch_medals() {
@@ -88,7 +88,7 @@ export default {
                     img: this.img_url[name.replaceAll('-', '_')],
                 };
             });
-            console.log('country list: ', this.countryList);
+            // console.log('country list: ', this.countryList);
         },
         sortByName() {
             this.countryList.sort((a, b) => a.name.localeCompare(b.name))

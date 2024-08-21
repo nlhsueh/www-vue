@@ -10,14 +10,24 @@
             <span class="medal silver">{{ silver }}</span>
             <span class="medal bronze">{{ bronze }}</span>
         </div>
-        <p class="mt-2">{{ countryDescription }}</p> <!-- Displaying the description -->
+        <p class="mt-2">{{ countryDescription }}</p> 
+
+        <updateMedals :countryList="countryList" :selectedCountryProp="countryName" @updateMedals="updateCountryMedals" />
+
     </div>
 
 </template>
 
 <script>
 export default {
-    props: ['countryName', 'countryImg', 'gold', 'silver', 'bronze'],
+    data() {
+        return {
+            goldMedals:null,
+            silverMedals:null,
+            bronzeMedals:null,
+        }
+    },
+    props: ['countryList','countryName', 'countryImg', 'gold', 'silver', 'bronze'],
     data() {
         return {
             desc: {
@@ -52,7 +62,10 @@ export default {
     methods: {
         goBack() {
             this.$emit('clearSelection'); 
-        }
+        },
+        updateCountryMedals(countryList) {
+            this.countryList = countryList;
+        },
     }         
 }        
 </script>
