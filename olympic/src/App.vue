@@ -10,15 +10,18 @@
             <updateMedals :countryList="countryList" :selectedCountryProp="selectedCountry" @updateMedals="updateMedals" />
 
             <div class="row justify-content-center" id="medalTable">
-                <div v-for="country in countryList" :key="country.name" class="country-card col-lg-2 col-md-3 col-sm-4 col-6">
-                    <c_medal :countryName="country.name" :countryImg="country.img" :gold="country.gold" :silver="country.silver" :bronze="country.bronze" @showDetails="displayMedalDetails" />
+                <div v-for="country in countryList" :key="country.name"
+                    class="country-card col-lg-2 col-md-3 col-sm-4 col-6">
+                    <c_medal :countryName="country.name" :countryImg="country.img" :gold="country.gold"
+                        :silver="country.silver" :bronze="country.bronze" @showDetails="displayMedalDetails" />
                 </div>
             </div>
         </div>
 
         <div v-if="selectedCountry" class="mt-3">
-            <country_details :countryList="countryList" :countryName="selectedCountry" :countryImg="countryImg" :gold="gold" :silver="silver" :bronze="bronze" @clearSelection="clearSelectedCountry"/>
-        </div>        
+            <country_details :countryList="countryList" :countryName="selectedCountry" :countryImg="countryImg" :gold="gold"
+                :silver="silver" :bronze="bronze" @clearSelection="clearSelectedCountry" @updateMedals="updateMedals" />
+        </div>
 
         <paris_footer />
     </div>
@@ -55,7 +58,7 @@ export default {
             countryList: [
             ],
             selectedCountry: null,
-            countryImg: null,            
+            countryImg: null,
             goldMedals: 0,
             silverMedals: 0,
             bronzeMedals: 0,
@@ -101,6 +104,8 @@ export default {
         },
         updateMedals(countryList) {
             this.countryList = countryList;
+            console.log('countryList is updated');
+            console.log(this.countryList);
         },
         displayMedalDetails(country) {
             console.log(country, ' is clicked');
@@ -108,12 +113,12 @@ export default {
             this.countryImg = country.countryImg;
             this.gold = country.gold;
             this.silver = country.silver;
-            this.bronze = country.bronze;            
+            this.bronze = country.bronze;
             // this.$bvModal.show('medalDetailsModal');
         },
         clearSelectedCountry() {
             this.selectedCountry = null;
-        },        
+        },
     }
 }
 </script>

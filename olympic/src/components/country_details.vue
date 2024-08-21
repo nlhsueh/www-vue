@@ -6,30 +6,27 @@
         <h5 class="card-title"> {{ countryName }}</h5>
         <img :src="'/img/' + countryImg" class="card-img-top">
         <div class="medals mt-2">
-            <span class="medal gold">{{ gold }}</span>
-            <span class="medal silver">{{ silver }}</span>
-            <span class="medal bronze">{{ bronze }}</span>
+            <span class="medal gold">{{ updatedGold }}</span>
+            <span class="medal silver">{{ updatedSilver }}</span>
+            <span class="medal bronze">{{ updatedBronze }}</span>
         </div>
-        <p class="mt-2">{{ countryDescription }}</p> 
+        <p class="mt-2">{{ countryDescription }}</p>
 
         <updateMedals :countryList="countryList" :selectedCountryProp="countryName" @updateMedals="updateCountryMedals" />
 
     </div>
-
 </template>
 
 <script>
 export default {
+    props: ['countryList', 'countryName', 'countryImg', 'gold', 'silver', 'bronze'],
     data() {
         return {
-            goldMedals:null,
-            silverMedals:null,
-            bronzeMedals:null,
-        }
-    },
-    props: ['countryList','countryName', 'countryImg', 'gold', 'silver', 'bronze'],
-    data() {
-        return {
+            countryName: this.countryName,
+            updatedGold: this.gold,
+            updatedSilver: this.silver,
+            updatedBronze: this.bronze,
+
             desc: {
                 Australia: "澳洲, 位於大洋洲, 人口約2,570萬, 面積約769萬平方公里。",
                 Azerbaijan: "亞塞拜然, 位於西亞與東歐交界, 人口約1,000萬, 面積約8.6萬平方公里。",
@@ -53,22 +50,28 @@ export default {
                 "United States": "美國, 位於北美洲, 人口約3.3億, 面積約983萬平方公里。"
             }
         };
-    },   
+    },
     computed: {
         countryDescription() {
-            return this.desc[this.countryName] || 'Description not available'; 
+            return this.desc[this.countryName] || 'Description not available';
         }
     },
     methods: {
         goBack() {
-            this.$emit('clearSelection'); 
+            this.$emit('clearSelection');
         },
         updateCountryMedals(countryList) {
-            this.countryList = countryList;
+            // this.countryList = countryList;
+            this.$emit('updateMedals', countryList);
+            const updatedCountry = this.countryList.find(c => c.name === this.countryName);
+            if (updatedCountry) {
+                this.updatedGold = updatedCountry.gold;
+                this.updatedSilver = updatedCountry.silver;
+                this.updatedBronze = updatedCountry.bronze;
+            }
         },
-    }         
+    }
 }        
 </script>
 
-<style> 
-</style>    
+<style></style>    

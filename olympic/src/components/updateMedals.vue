@@ -1,7 +1,7 @@
 <template>
     <div class="row m-3">
         <form @submit.prevent="updateMedals">
-            <div class="row m-3" >
+            <div class="row m-3">
                 <div class="col">
                     <select class="form-select" v-model="selectedCountry" id="country-select">
                         <option disabled value="">請選擇國家</option>
@@ -26,17 +26,16 @@
             </div>
         </form>
     </div>
- 
 </template>
 
 <script>
 export default {
     data() {
         return {
-            selectedCountry:null,
-            goldMedals:null,
-            silverMedals:null,
-            bronzeMedals:null,
+            selectedCountry: null,
+            goldMedals: null,
+            silverMedals: null,
+            bronzeMedals: null,
         }
     },
 
@@ -44,11 +43,9 @@ export default {
         'countryList', 'selectedCountryProp'
     ],
 
-    mounted() { 
-        if (this.selectedCountryProp) {
-            this.selectedCountry = this.selectedCountryProp; 
-        } 
-    },    
+    mounted() {
+        this.selectedCountry = this.selectedCountryProp ? this.selectedCountryProp : "";
+    },
 
     watch: {
         selectedCountry(newCountry) {
@@ -59,16 +56,16 @@ export default {
                 this.bronzeMedals = country.bronze;
             } else {
                 console.log('Country not found', country);
-                this.goldMedals = 0;
-                this.silverMedals = 0;
-                this.bronzeMedals = 0;
+                this.goldMedals = null;
+                this.silverMedals = null;
+                this.bronzeMedals = null;
             }
         }
     },
 
     methods: {
         updateMedals() {
-            const country = this.countryList.find(c => c.name === this.selectedCountry);                    
+            const country = this.countryList.find(c => c.name === this.selectedCountry);
             if (country) {
                 country.gold = this.goldMedals;
                 country.silver = this.silverMedals;
