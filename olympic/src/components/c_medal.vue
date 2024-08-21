@@ -37,6 +37,17 @@ export default {
       height: 300px;
       margin: 10px;
       padding: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      /* Add transition for smooth effect */
+      cursor: pointer;
+      /* Change cursor to pointer on hover */
+  }
+
+  .country-card:hover {
+      transform: translateY(-5px);
+      /* Move the card slightly up */
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+      /* Add shadow on hover */
   }
 
   .card-img-top {
@@ -75,5 +86,4 @@ export default {
 
   .bronze {
       background-color: #CD7F32;
-  }
-</style>    
+  }</style>    
