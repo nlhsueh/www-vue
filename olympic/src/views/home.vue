@@ -1,6 +1,11 @@
 <template>
     <div class="container mt-3">
         <h2 class="welcome-text">歡迎來到巴黎奧運 2024</h2>
+
+        <div>
+            <router-link to="/medals" class="nav-link active"> => 看看目前的得獎狀況</router-link>
+        </div>
+
     </div>
 </template>
       

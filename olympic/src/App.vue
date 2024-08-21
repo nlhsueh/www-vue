@@ -27,51 +27,33 @@ export default {
     data() {
         return {
             medals: null,
-            img_url: {
-                Australia: "australia.png",
-                Azerbaijan: "azerbaijan.png",
-                Belgium: "belgium.png",
-                Brazil: "brazil.png",
-                Canada: "canada.png",
-                China: "china.png",
-                France: "france.png",
-                Germany: "germany.png",
-                Great_Britain: "great-britain.png",
-                Hong_Kong: "hong-kong.png",
-                India: "india.png",
-                Italy: "italy.png",
-                Japan: "japan.png",
-                Kazakhstan: "kazakhstan.png",
-                Moldova: "moldova.png",
-                Republic_of_Korea: "skorea.png",
-                South_Africa: "south-africa.png",
-                Sweden: "sweden.png",
-                Turkey: "turkey.png",
-                United_States: "united-states.png"
-            },
+            img_url: null,
             countryList: [
                 { 'gold': 12, 'silver': 13, 'broze': 20, },
             ],
-            selectedCountry: "",
-            goldMedals: 0,
-            silverMedals: 0,
-            bronzeMedals: 0,
         };
     },
     async created() {
-        await this.fetch_medals();
+        await this.fetch_data();
         this.build_country_list();
-        console.log('>>>>>> countryList built in App <<<<<<<', this.countryList);
+    },
+    provide() {
+        return {
+            countryList: () => this.countryList,
+        }
     },
     methods: {
-        async fetch_medals() {
-            const response = await fetch("medals.json");
-            const data = await response.json();
+        async fetch_data() {
+            let response = await fetch("medals.json");
+            let data = await response.json();
             this.medals = data.medals;
+            response = await fetch("img_url.json");
+            data = await response.json();
+            this.img_url = data.img_url;
         },
         build_country_list() {
-            if (!this.medals) {
-                console.log('Medals is not built');
+            if (!this.medals || !this.img_url) {
+                console.log('Medals/img_url are not built');
                 return;
             }
             this.countryList = this.medals.map(medal => {
@@ -85,28 +67,8 @@ export default {
                     img: this.img_url[name.replaceAll('-', '_')],
                 };
             });
-            console.log('country list: ', this.countryList);
+            // console.log('country list: ', this.countryList);
         },
-        sortByName() {
-            this.countryList.sort((a, b) => a.name.localeCompare(b.name))
-        },
-        sortByGold() {
-            this.countryList.sort((a, b) => b.gold - a.gold);
-        },
-        sortByTotal() {
-            this.countryList.sort((a, b) => b.total - a.total);
-        },
-        updateMedals(countryList) {
-            this.countryList = countryList;
-        }
     },
-    provide() {
-        return {
-            countryList: () => this.countryList,
-        }
-    }
 }
 </script>
-
-  
-<style></style>  
