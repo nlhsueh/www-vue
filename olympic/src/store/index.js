@@ -26,34 +26,13 @@ const store = createStore({
     state() {
         return {
             medals: null,
-            img_url: {
-                Australia: "australia.png",
-                Azerbaijan: "azerbaijan.png",
-                Belgium: "belgium.png",
-                Brazil: "brazil.png",
-                Canada: "canada.png",
-                China: "china.png",
-                France: "france.png",
-                Germany: "germany.png",
-                Great_Britain: "great-britain.png",
-                Hong_Kong: "hong-kong.png",
-                India: "india.png",
-                Italy: "italy.png",
-                Japan: "japan.png",
-                Kazakhstan: "kazakhstan.png",
-                Moldova: "moldova.png",
-                Republic_of_Korea: "skorea.png",
-                South_Africa: "south-africa.png",
-                Sweden: "sweden.png",
-                Turkey: "turkey.png",
-                United_States: "united-states.png"
-            },
+            img_url: null,
             countryList: [],
             selectedCountry: "",
             goldMedals: 0,
             silverMedals: 0,
             bronzeMedals: 0,
-            hasFetchedMedals: false, // Flag to track if fetchMedals has been called
+            hasFetchedData: false, // Flag to track if fetchData has been called
         };
     },
     mutations: {
@@ -63,12 +42,13 @@ const store = createStore({
         setMedals(state, medals) {
             state.medals = medals;
         },
+        setImgUrl(state, img_url) {
+            state.img_url = img_url;
+        },
         updateMedalsInStore(state, updatedCountry) {
             const index = state.countryList.findIndex(c => c.name === updatedCountry.name);
-            console.log('Updated country list', updatedCountry);
             if (index !== -1) {
                 state.countryList.splice(index, 1, updatedCountry);
-                console.log('State country list', state.countryList);
             }
         },
         sortByName(state) {
@@ -80,25 +60,32 @@ const store = createStore({
         sortByTotal(state) {
             state.countryList.sort((a, b) => b.total - a.total);
         },
-        setHasFetchedMedals(state, value) {
-            state.hasFetchedMedals = value;
+        setHasFetchedData(state, value) {
+            state.hasFetchedData = value;
         },
     },
     actions: {
-        async fetchMedals({ commit, state }) {
-            if (state.hasFetchedMedals) {
-                console.log('fetch medals have been called');
+        async fetchData({ commit, state }) {
+            if (state.hasFetchedData) {
+                console.log('Fetch data has already been called');
                 return;
             }
             try {
-                const response = await fetch("medals.json");
-                const data = await response.json();
+                const medalsResponse = await fetch("medals.json");
+                const medalsData = await medalsResponse.json();
+                commit('setMedals', medalsData.medals);
 
-                // Build the country list after fetching the medals
-                const countryList = buildCountryList(data.medals, state.img_url);
+                const imgUrlResponse = await fetch("img_url.json");
+                const imgUrlData = await imgUrlResponse.json();
+                commit('setImgUrl', imgUrlData.img_url);
+
+                // Build the country list after fetching the data
+                const countryList = buildCountryList(medalsData.medals, imgUrlData.img_url);
+                console.log('contryList in state', countryList);
                 commit('setCountryList', countryList);
+                commit('setHasFetchedData', true); // Mark data as fetched
             } catch (error) {
-                console.error("Error fetching medals:", error);
+                console.log("Error fetching data:");
             }
         },
     },

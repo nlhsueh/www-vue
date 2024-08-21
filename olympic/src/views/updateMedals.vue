@@ -26,44 +26,44 @@
             </div>
         </form>
     </div>
- 
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex';
-  
-  export default {
-    data() {
-      return {
-        selectedCountry: "",
-        goldMedals: null,
-        silverMedals: null,
-        bronzeMedals: null,
-      };
-    },
-    computed: {
-      ...mapState(['countryList']),
-    },
-    watch: {
-      selectedCountry(newCountry) {
-        const country = this.countryList.find(c => c.name === newCountry);
-        if (country) {
-          this.goldMedals = country.gold;
-          this.silverMedals = country.silver;
-          this.bronzeMedals = country.bronze;
-        } else {
-          this.goldMedals = 0;
-          this.silverMedals = 0;
-          this.bronzeMedals = 0;
-        }
+import { mapState, mapMutations } from 'vuex';
+
+export default {
+  data() {
+    return {
+      selectedCountry: "",
+      goldMedals: 0,
+      silverMedals: 0,
+      bronzeMedals: 0,
+    };
+  },
+  computed: {
+    ...mapState(['countryList']),
+  },
+  watch: {
+    selectedCountry(newCountry) {
+      const country = this.countryList.find(c => c.name === newCountry);
+      if (country) {
+        this.goldMedals = country.gold;
+        this.silverMedals = country.silver;
+        this.bronzeMedals = country.bronze;
+      } else {
+        this.goldMedals = 0;
+        this.silverMedals = 0;
+        this.bronzeMedals = 0;
       }
-    },
-    methods: {
-      ...mapMutations(['updateMedalsInStore']),
-  
-      updateMedals() {
-        const country = this.countryList.find(c => c.name === this.selectedCountry);
-        if (country) {            
+    }
+  },
+  methods: {
+    ...mapMutations(['updateMedalsInStore']),
+
+    updateMedals() {
+      const country = this.countryList.find(c => c.name === this.selectedCountry);
+      if (country) {
+        if (this.goldMedals >= 0 && this.silverMedals >= 0 && this.bronzeMedals >= 0) {
           const updatedCountry = {
             ...country,
             gold: this.goldMedals,
@@ -72,16 +72,17 @@
             total: this.goldMedals + this.silverMedals + this.bronzeMedals,
           };
           this.updateMedalsInStore(updatedCountry);
+        } else {
+          console.error("Medal counts must be non-negative.");
         }
-        else {
-            console.log('Country not fould');
-        }
-      },
-    }
-  };
-  </script>
-  
-  <style>
-  /* Your style code here */
-  </style>
-  
+      } else {
+        console.warn('Country not found');
+      }
+    },
+  }
+};
+</script>
+
+<style>
+/* Your style code here */
+</style>

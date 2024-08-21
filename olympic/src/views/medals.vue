@@ -17,28 +17,25 @@ import { mapState, mapActions, mapMutations } from 'vuex';
 export default {
   computed: {
     ...mapState({
-        countryList: (state) => state.countryList,
-        hasFetchedMedals: (state) => state.hasFetchedMedals,
+      countryList: state => state.countryList,
+      hasFetchedData: state => state.hasFetchedData,
     }),
   },
   created() {
-    if (!this.hasFetchedMedals) {
-        console.log('Call fetchMedals in medals.vue');
-        this.fetchMedals();
+    if (!this.hasFetchedData) {
+      this.fetchData().then(() => {
+        console.log('Data fetched, countryList is:');
+        console.log(this.countryList);
+      });
     }
   },
   mounted() {
-    console.log('mounted is called');
+    console.log('mounted is called, countryList is:');
     console.log(this.countryList);
-    console.log(this.$store.state.countryList);
   },
   methods: {
-    ...mapActions(['fetchMedals']),
+    ...mapActions(['fetchData']),
     ...mapMutations(['sortByName', 'sortByGold', 'sortByTotal']),
   },
-  watch: {
-    // This will trigger when the route changes and re-fetch the data
-    '$route': 'fetchMedals',
-  }  
 };
 </script>
