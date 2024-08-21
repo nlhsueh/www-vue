@@ -26,7 +26,6 @@ export default {
             updatedGold: this.gold,
             updatedSilver: this.silver,
             updatedBronze: this.bronze,
-
             desc: {
                 Australia: "澳洲, 位於大洋洲, 人口約2,570萬, 面積約769萬平方公里。",
                 Azerbaijan: "亞塞拜然, 位於西亞與東歐交界, 人口約1,000萬, 面積約8.6萬平方公里。",
@@ -51,17 +50,18 @@ export default {
             }
         };
     },
+
     computed: {
         countryDescription() {
             return this.desc[this.countryName] || 'Description not available';
         }
     },
+
     methods: {
         goBack() {
             this.$emit('clearSelection');
         },
         updateCountryMedals(countryList) {
-            // this.countryList = countryList;
             this.$emit('updateMedals', countryList);
             const updatedCountry = this.countryList.find(c => c.name === this.countryName);
             if (updatedCountry) {
