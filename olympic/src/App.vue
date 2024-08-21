@@ -4,6 +4,9 @@
 
     <ul class="nav">
         <li class="nav-item">
+            <router-link to="/home" class="nav-link active">HOME</router-link>
+        </li>
+        <li class="nav-item">
             <router-link to="/medals" class="nav-link active">Medals</router-link>
         </li>
         <li class="nav-item">
@@ -47,7 +50,7 @@ export default {
                 United_States: "united-states.png"
             },
             countryList: [
-                {'gold':12, 'silver':13, 'broze':20,},
+                { 'gold': 12, 'silver': 13, 'broze': 20, },
             ],
             selectedCountry: "",
             goldMedals: 0,
@@ -98,9 +101,9 @@ export default {
         }
     },
     provide() {
-      return {
-        countryList: () => this.countryList,
-      }
+        return {
+            countryList: () => this.countryList,
+        }
     }
 }
 </script>

@@ -8,12 +8,16 @@ import medals from './components/medals.vue'
 import sort from './components/sort.vue'
 import updateMedals from './components/updateMedals.vue'
 import paris_footer from './components/footer.vue'
+import home from './components/home.vue'
+
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
+        { path: '/home', component: home },
         { path: '/medals', component: medals },
         { path: '/updateMedals', component: updateMedals },
+        { path: '/', redirect: '/home' },
     ]
 });
 
