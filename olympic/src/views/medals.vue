@@ -12,30 +12,58 @@
 </template>
   
 <script>
+// mapState is a Vuex helper function that allows you to easily map state properties from the Vuex store to computed properties in your Vue components. This makes it more convenient to access and use the store's state within your components without manually writing out computed properties for each piece of state you want to access.
+
 import { mapState, mapActions, mapMutations } from 'vuex';
 
 export default {
   computed: {
+    // ... is a spread operator in Javascript
     ...mapState({
       countryList: state => state.countryList,
       hasFetchedData: state => state.hasFetchedData,
     }),
+    // Original code without mapState:
+    // countryList() {
+    //   return this.$store.state.countryList;
+    // },
+    // hasFetchedData() {
+    //   return this.$store.state.hasFetchedData;
+    // }
   },
+
   created() {
     if (!this.hasFetchedData) {
+      // The then() method is called on this promise. The callback function inside then() will be executed once the fetchData promise resolves, indicating that the data has been successfully fetched.
       this.fetchData().then(() => {
         console.log('Data fetched, countryList is:');
         console.log(this.countryList);
       });
     }
   },
+
   mounted() {
     console.log('mounted is called, countryList is:');
     console.log(this.countryList);
   },
   methods: {
     ...mapActions(['fetchData']),
+    // Original code:
+    //  fetchData() {
+    //    return this.$store.dispatch('fetchData');
+    //  },
     ...mapMutations(['sortByName', 'sortByGold', 'sortByTotal']),
+    // Original
+    // sortByName() {
+    //   return this.$store.commit('sortByName');
+    // },
+    // sortByGold() {
+    //   return this.$store.commit('sortByGold');
+    // },
+    // sortByTotal() {
+    //   return this.$store.commit('sortByTotal');
+    // }
+
   },
 };
 </script>

@@ -35,6 +35,8 @@ const store = createStore({
             hasFetchedData: false, // Flag to track if fetchData has been called
         };
     },
+
+    // Mutations are for synchronous state changes and directly modify the state.
     mutations: {
         setCountryList(state, countryList) {
             state.countryList = countryList;
@@ -64,6 +66,8 @@ const store = createStore({
             state.hasFetchedData = value;
         },
     },
+
+    // Actions are for asynchronous operations or complex logic and commit mutations to modify the state.
     actions: {
         async fetchData({ commit, state }) {
             if (state.hasFetchedData) {
