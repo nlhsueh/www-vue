@@ -13,49 +13,90 @@ If you use Vuex to manage the state of your application, you can solve the probl
 2. **Create a Vuex Store**:
    Define a Vuex store where `countryList` and other shared state variables are stored.
 
-   ```javascript
-   // store/index.js
-   import { createStore } from 'vuex';
+```javascript
+// store/index.js
+import { createStore } from 'vuex';
 
-   const store = createStore({
-     state() {
-       return {
-         countryList: [],
-         goldMedals: 0,
-       };
-     },
-     mutations: {
-       setCountryList(state, countryList) {
-         state.countryList = countryList;
-       },
-       setGoldMedals(state, count) {
-         state.goldMedals = count;
-       },
-     },
-     actions: {
-       async fetchMedals({ commit }) {
-         // Fetch the medal data
-         const data = await fetchMedalData(); // Replace with your actual data fetching logic
-         commit('setCountryList', data.countryList);
-         commit('setGoldMedals', data.goldMedals);
-       },
-       buildCountryList({ commit }, countryList) {
-         // Process and commit the country list
-         commit('setCountryList', countryList);
-       },
-     },
-     getters: {
-       getCountryList(state) {
-         return state.countryList;
-       },
-       getGoldMedals(state) {
-         return state.goldMedals;
-       },
-     },
-   });
+const store = createStore({
+    state() {
+        return {
+            medals: null,
+            img_url: null,
+            countryList: [],
+            selectedCountry: "",
+            goldMedals: 0,
+            silverMedals: 0,
+            bronzeMedals: 0,
+            hasFetchedData: false, // Flag to track if fetchData has been called
+        };
+    },
 
-   export default store;
-   ```
+    // Mutations are for synchronous state changes and directly modify the state.
+    mutations: {
+        setCountryList(state, countryList) {
+            state.countryList = countryList;
+        },
+        setMedals(state, medals) {
+            state.medals = medals;
+        },
+        setImgUrl(state, img_url) {
+            state.img_url = img_url;
+        },
+        updateMedalsInStore(state, updatedCountry) {
+            const index = state.countryList.findIndex(c => c.name === updatedCountry.name);
+            if (index !== -1) {
+                state.countryList.splice(index, 1, updatedCountry);
+            }
+        },
+        sortByName(state) {
+            state.countryList.sort((a, b) => a.name.localeCompare(b.name));
+        },
+        sortByGold(state) {
+            state.countryList.sort((a, b) => b.gold - a.gold);
+        },
+        sortByTotal(state) {
+            state.countryList.sort((a, b) => b.total - a.total);
+        },
+        setHasFetchedData(state, value) {
+            state.hasFetchedData = value;
+        },
+    },
+
+    // Actions are for asynchronous operations or complex logic and commit mutations to modify the state.
+    actions: {
+        async fetchData({ commit, state }) {
+            if (state.hasFetchedData) {
+                console.log('Fetch data has already been called');
+                return;
+            }
+            try {
+                const medalsResponse = await fetch("medals.json");
+                const medalsData = await medalsResponse.json();
+                commit('setMedals', medalsData.medals);
+
+                const imgUrlResponse = await fetch("img_url.json");
+                const imgUrlData = await imgUrlResponse.json();
+                commit('setImgUrl', imgUrlData.img_url);
+
+                // Build the country list after fetching the data
+                const countryList = buildCountryList(medalsData.medals, imgUrlData.img_url);
+                console.log('contryList in state', countryList);
+                commit('setCountryList', countryList);
+                commit('setHasFetchedData', true); // Mark data as fetched
+            } catch (error) {
+                console.log("Error fetching data:");
+            }
+        },
+    },
+    getters: {
+        getCountryList(state) {
+            return state.countryList;
+        },
+    },
+});
+
+export default store;
+```
 
 3. **Integrate Vuex into Your Vue Application**:
    In your main entry file (`main.js`), import the Vuex store and add it to your Vue app.
@@ -75,42 +116,44 @@ If you use Vuex to manage the state of your application, you can solve the probl
 4. **Access the Vuex Store in Components**:
    Now, in any component, you can access `countryList` and other state variables using Vuex. You can also dispatch actions to fetch and update data.
 
-   ```javascript
-   // ExampleComponent.vue
-   <template>
-     <div>
-       <h1>Country List</h1>
-       <ul>
-         <li v-for="country in countryList" :key="country">{{ country }}</li>
-       </ul>
-     </div>
-   </template>
+```javascript
+import { mapState, mapActions, mapMutations } from 'vuex';
 
-   <script>
-   import { mapState, mapActions } from 'vuex';
+export default {
+  computed: {
+    ...mapState({
+      countryList: state => state.countryList,
+      hasFetchedData: state => state.hasFetchedData,
+    }),
+  },
 
-   export default {
-     computed: {
-       ...mapState({
-         countryList: (state) => state.countryList,
-       }),
-     },
-     created() {
-       this.fetchMedals();
-     },
-     methods: {
-       ...mapActions(['fetchMedals']),
-     },
-   };
-   </script>
-   ```
+  created() {
+    if (!this.hasFetchedData) {
+      this.fetchData().then(() => {
+        console.log('Data fetched, countryList is:');
+        console.log(this.countryList);
+      });
+    }
+  },
 
-   In this example:
-   - `mapState` is used to map the `countryList` from Vuex state to a computed property.
-   - `mapActions` is used to map Vuex actions to methods, allowing you to trigger actions like `fetchMedals` to update the store.
+  mounted() {
+    console.log('mounted is called, countryList is:');
+    console.log(this.countryList);
+  },
+  methods: {
+    ...mapActions(['fetchData']),
+    ...mapMutations(['sortByName', 'sortByGold', 'sortByTotal']),
+
+  },
+};
+</script>
+
+
+```
 
 5. **Ensure Reactivity**:
-   - Any update to `countryList` via Vuex will automatically be reactive in all components using it, ensuring that your application stays in sync without needing to manually pass data through props or use `provide/inject`.
+
+- Any update to `countryList` via Vuex will automatically be reactive in all components using it, ensuring that your application stays in sync without needing to manually pass data through props or use `provide/inject`.
 
 ### Advantages of Using Vuex:
 - **Centralized State Management**: All your application’s state is managed in a single place, making it easier to maintain and debug.
@@ -165,7 +208,7 @@ my-vue-project/
 
 ## mapState
 
-The `...` in JavaScript, often referred to as the "spread syntax" or "spread operator," is used to spread or expand elements of an iterable (like an array or object) into individual elements. In the context of Vue's `computed` properties and Vuex's `mapState`, it is used to integrate or "spread" the mapped state properties into the component's `computed` properties.
+The `...` in JavaScript, often referred to as the **spread syntax** or "spread operator," is used to spread or expand elements of an iterable (like an array or object) into individual elements. In the context of Vue's `computed` properties and Vuex's `mapState`, it is used to integrate or "spread" the mapped state properties into the component's `computed` properties.
 
 ### In the Given Context:
 ```javascript
