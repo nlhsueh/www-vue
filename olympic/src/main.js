@@ -1,6 +1,6 @@
 
 import { createApp } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import store from './store';
 
 import App from './App.vue'
@@ -13,7 +13,7 @@ import sort from './components/sort.vue'
 import paris_footer from './components/footer.vue'
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(), // Use hash mode
     routes: [
         { path: '/', component: home },
         { path: '/medals', component: medals },
