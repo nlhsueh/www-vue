@@ -75,11 +75,11 @@ const store = createStore({
                 return;
             }
             try {
-                const medalsResponse = await fetch(`${import.meta.env.BASE_URL}medals.json`);
+                const medalsResponse = await fetch(`${import.meta.env.BASE_URL}data/medals.json`);
                 const medalsData = await medalsResponse.json();
                 commit('setMedals', medalsData.medals);
 
-                const imgUrlResponse = await fetch(`${import.meta.env.BASE_URL}img_url.json`);
+                const imgUrlResponse = await fetch(`${import.meta.env.BASE_URL}data/img_url.json`);
                 const imgUrlData = await imgUrlResponse.json();
                 commit('setImgUrl', imgUrlData.img_url);
 
