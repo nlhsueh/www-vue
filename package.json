@@ -1,6 +1,6 @@
 {
-  "name": "olympic-v7",
-  "version": "0.0.0",
+  "name": "www-vue",
+  "version": "olympic-v7",
   "private": true,
   "type": "module",
   "scripts": {

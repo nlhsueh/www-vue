@@ -1,0 +1,25 @@
+{
+    "img_url": {
+        "Australia": "australia.png",
+        "Azerbaijan": "azerbaijan.png",
+        "Belgium": "belgium.png",
+        "Brazil": "brazil.png",
+        "Canada": "canada.png",
+        "China": "china.png",
+        "France": "france.png",
+        "Germany": "germany.png",
+        "Great_Britain": "great-britain.png",
+        "Hong_Kong": "hong-kong.png",
+        "India": "india.png",
+        "Italy": "italy.png",
+        "Japan": "japan.png",
+        "Kazakhstan": "kazakhstan.png",
+        "Moldova": "moldova.png",
+        "Republic_of_Korea": "skorea.png",
+        "South_Africa": "south-africa.png",
+        "Sweden": "sweden.png",
+        "Turkey": "turkey.png",
+        "United_States": "united-states.png",
+        "Taiwan": "taiwan.png"
+    }
+}
