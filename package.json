@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "postbuild": "cpx \"dist/**/*\" /Users/nickhsueh/ebook/md-se"
+    "preview": "vite preview"
   },
   "dependencies": {
     "vue": "^3.4.29",
